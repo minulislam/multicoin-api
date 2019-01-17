@@ -1,13 +1,13 @@
 <?php
 
 require './vendor/autoload.php';
+use Multicoin\Api\ApiClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\HttpAsyncClientDiscovery;
 use Http\Client\Common\HttpClientPool\LeastUsedClientPool;
-
-/*$api = new ApiClient();
-dd($api->doStuff());*/
+$api = new ApiClient();
+dd($api->doStuff());
 $messageFactory = MessageFactoryDiscovery::find();
 
 $httpClient      = HttpClientDiscovery::find();
