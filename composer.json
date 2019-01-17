@@ -1,0 +1,75 @@
+{
+    "name": "multicoin/api-client",
+    "description": "its a packages for multicoin api",
+    "keywords": ["spatie", "multicoin-client"],
+    "homepage": "https://github.com/multicoin/multicoin-client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "s1rxploit",
+            "email": "s1rxploit@gmail.com",
+            "homepage": "https://multicoin.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+            "php-http/client-common": "^1.9 || ^2.0",
+               "php-http/client-implementation": "^1.0", 
+        "php-http/async-client-implementation": "^1.0",
+         "php-http/discovery": "^1.0",
+        "php-http/httplug": "^1.0 || ^2.0",
+        "php-http/logger-plugin": "^1.1",
+        "php-http/message": "^1.4",
+        "php-http/message-factory": "^1.0.2",
+        "psr/http-message": "^1.0"
+
+     
+       
+    },
+    "require-dev": {
+        "larapack/dd": "^1.0",
+            "guzzlehttp/psr7": "^1.0",
+         "php-http/guzzle6-adapter": "^1.1.1 || ^2.0.1",
+     
+        "php-http/mock-client": "^1.2",
+        "phpunit/phpunit": "^7.0"
+    
+       
+    },
+      "conflict": {
+        "php-http/guzzle6-adapter": "<1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Multicoin\\Api\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Multicoin\\Api\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["Multicoin\\Api\\MulticoinServiceProvider"],
+            "aliases": {
+                "Multicoin": "Multicoin\\Api\\Facade\\Multicoin"
+            }
+        }
+    },
+    "suggest": {
+        "php-http/message": "Required to use Guzzle for sending HTTP requests",
+         "php-http/mock-client": "Add this to your require-dev section to mock HTTP responses easily",
+        "php-http/guzzle6-adapter": "Required to use Guzzle for sending HTTP requests"
+    },
+      "prefer-stable": true,
+    "minimum-stability": "dev"
+}
