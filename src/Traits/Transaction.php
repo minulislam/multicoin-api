@@ -6,7 +6,7 @@ trait Transaction
 {
     public function transactionsFromDb($address)
     {
-        $url = $this->buildUrl('/'.$address.'/txfromdb');
+        $url      = $this->buildUrl('/'.$address.'/txfromdb');
         $response = $this->doGet($url);
 
         return $response;
@@ -14,7 +14,7 @@ trait Transaction
 
     public function transactionsFromApi($address)
     {
-        $url = $this->buildUrl('/'.$address.'/txfromapi');
+        $url      = $this->buildUrl('/'.$address.'/txfromapi');
         $response = $this->doGet($url);
 
         return $response;
@@ -22,7 +22,7 @@ trait Transaction
 
     public function transaction($txid)
     {
-        $url = $this->buildUrl('/tx/'.$txid);
+        $url      = $this->buildUrl('/tx/'.$txid);
         $response = $this->doGet($url);
 
         return $response;
@@ -30,7 +30,7 @@ trait Transaction
 
     public function transactionValidate($txid)
     {
-        $url = $this->buildUrl('/tx/'.$txid.'/validate');
+        $url      = $this->buildUrl('/tx/'.$txid.'/validate');
         $response = $this->doGet($url);
 
         return $response;
@@ -38,7 +38,7 @@ trait Transaction
 
     public function transactionConfirmations($txid)
     {
-        $url = $this->buildUrl('/tx/'.$txid.'/confirmations');
+        $url      = $this->buildUrl('/tx/'.$txid.'/confirmations');
         $response = $this->doGet($url);
 
         return $response;
