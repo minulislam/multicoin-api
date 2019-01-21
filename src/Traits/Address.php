@@ -6,11 +6,10 @@ trait Address
 {
     public function addressNew()
     {
-        /**
-         * [GET api/v1/{coin}/addr/new]
-         */
-        $url      = '/addr/new';
+        $url = $this->buildUrlParam('/addr/new');
+
         $response = $this->doGet($url);
+
         return $response;
     }
 
@@ -19,7 +18,7 @@ trait Address
         /**
          * GET api/v1/{coin}/addr/{address}/balance
          */
-        $url      = $this->coin.'/addr/'.$this->address.'/balance';
+        $url      = $this->buildUrlParam('/addr/'.$this->address.'/balance');
         $response = $this->doGet($url);
         return $response;
 
@@ -30,7 +29,7 @@ trait Address
         /**
          * GET api/v1/{coin}/addr/{address}
          */
-        $url      = $this->coin.'/addr/'.$this->address;
+        $url      = $this->buildUrlParam('/addr/'.$this->address);
         $response = $this->doGet($url);
         return $response;
 
@@ -41,7 +40,7 @@ trait Address
         /**
          * GET api/v1/{coin}/addr/{address}/txs
          */
-        $url      = $this->coin.'/addr/'.$this->address.'/txs';
+        $url      = $this->buildUrlParam('/addr/'.$this->address.'/txs');
         $response = $this->doGet($url);
         return $response;
     }
@@ -51,7 +50,7 @@ trait Address
         /**
          * GET api/v1/{coin}/addr/{address}/utxo
          */
-        $url      = $this->coin.'/addr/'.$this->address.'/utxo';
+        $url      = $this->buildUrlParam('/addr/'.$this->address.'/utxo');
         $response = $this->doGet($url);
         return $response;
     }
@@ -61,7 +60,7 @@ trait Address
         /**
          * GET api/v1/{coin}/addr/{address}/validate
          */
-        $url      = $this->coin.'/addr/'.$this->address.'/validate';
+        $url      = $this->buildUrlParam('/addr/'.$this->address.'/validate');
         $response = $this->doGet($url);
         return $response;
     }

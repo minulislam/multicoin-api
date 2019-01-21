@@ -13,7 +13,7 @@ trait Transaction
         /**
          * [ GET api/v1/{coin}/{address}/txfromdb ]
          */
-        $url      = $this->coin.'/'.$this->address.'/txfromdb';
+        $url      = $this->buildUrlParam('/'.$this->address.'/txfromdb');
         $response = $this->doGet($url);
         return $response;
     }
@@ -23,7 +23,7 @@ trait Transaction
         /**
          * [ GET api/v1/{coin}/{address}/txfromapi ]
          */
-        $url      = $this->coin.'/'.$this->address.'/txfromapi';
+        $url      = $this->buildUrlParam('/'.$this->address.'/txfromapi');
         $response = $this->doGet($url);
         return $response;
     }
@@ -33,7 +33,7 @@ trait Transaction
         /**
          * [ GET api/v1/{coin}/tx/{txid} ]
          */
-        $url      = $this->coin.'/tx/'.$this->txid;
+        $url      = $this->buildUrlParam('/tx/'.$this->txid);
         $response = $this->doGet($url);
         return $response;
     }
@@ -43,7 +43,7 @@ trait Transaction
         /**
          * [GET api/v1/{coin}/tx/{txid}/validate ]
          */
-        $url      = $this->coin.'/tx/'.$this->txid.'/validate';
+        $url      = $this->buildUrlParam('/tx/'.$this->txid.'/validate');
         $response = $this->doGet($url);
         return $response;
     }
@@ -53,7 +53,7 @@ trait Transaction
         /**
          * [GET api/v1/{coin}/tx/{txid}/confirmations ]
          */
-        $url      = $this->coin.'/tx/'.$this->txid.'/confirmations';
+        $url      = $this->buildUrlParam('/tx/'.$this->txid.'/confirmations');
         $response = $this->doGet($url);
         return $response;
     }

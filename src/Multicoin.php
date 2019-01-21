@@ -7,13 +7,13 @@ use Multicoin\Api\Traits\Invoice;
 use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Transaction;
 use Http\Message\Authentication\Bearer;
+use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
 
 class Multicoin extends ApiClient
 {
     use Address, Invoice, Transaction;
-    public $apiKey;
-    public $url;
+
     public $coin;
     private $address;
     private $txid;
@@ -21,10 +21,10 @@ class Multicoin extends ApiClient
     public function __construct(array $config = [])
     {
         $this->config = $config;
-
+        $this->coin   = $config['coin'];
         parent::__construct(
             $this->setUrl($this->config['url']),
-            [$this->setAuth($this->config['key'])]
+            $this->setAuth($this->config['key'])
         );
     }
 
@@ -36,24 +36,23 @@ class Multicoin extends ApiClient
 
         $authentication       = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
-        return $authenticationPlugin;
+        $decoderPlugin        = new DecoderPlugin();
+        return [$authenticationPlugin, $decoderPlugin];
     }
 
     public function setUrl($url = null)
     {
         if (null === $url) {
-            $this->url = config('multicoin.url');
-            return $this;
+            return config('multicoin.url');
         }
 
         return $url;
 
     }
 
-    public function getcurrency()
+    public function buildUrlParam($url)
     {
-        $this->coin = $this->config['coin'];
-        return $this->coin;
+        return '/'.trim($this->coin, '/').$url;
     }
 
 }

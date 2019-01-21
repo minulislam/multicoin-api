@@ -12,7 +12,7 @@ use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 
-abstract class ApiClient
+class ApiClient
 {
     /**
      * @var RequestFactory
@@ -23,7 +23,7 @@ abstract class ApiClient
      * @var HttpClient
      */
     private $httpClient;
-    private $client;
+    public $client;
     private $plugins = [];
 
     /**
@@ -67,19 +67,18 @@ abstract class ApiClient
 
     }
 
-    public function doGet(string $url, array $data = []):  ? array
+    public function doGet(string $url):  ? array
     {
-        $response = $this->client->get($this->getcurrency().'/'.$url);
+        $response = $this->client->get($url);
 
-        return json_decode((string) $response->getBody(), true);
+        return json_decode($response->getBody()->getContents(), true);
 
     }
     public function doPost(string $url, array $data = []) :  ? array
     {
-        $response = $this->client->get($this->getcurrency().'/'.$url, $data);
+        $response = $this->client->get($url, $data);
         return json_decode((string) $response->getBody(), true);
 
     }
-    abstract public function getcurrency();
 
 }

@@ -2,7 +2,6 @@
 
 namespace Multicoin\Api;
 
-use Psr\Log\LoggerInterface;
 use InvalidArgumentException;
 use Multicoin\Api\Multicoin as Multicoincurrency;
 
@@ -16,13 +15,6 @@ class MulticoinFactory
     protected $config;
 
     /**
-     * Laravel log writer.
-     *
-     * @var \Illuminate\Log\Writer
-     */
-    protected $logger;
-
-    /**
      * currency instances.
      *
      * @var array
@@ -32,14 +24,12 @@ class MulticoinFactory
     /**
      * Constructs currency factory instance.
      *
-     * @param  array                    $config
-     * @param  \Psr\Log\LoggerInterface $logger
+     * @param  array  $config
      * @return void
      */
-    public function __construct(array $config, LoggerInterface $logger)
+    public function __construct(array $config)
     {
         $this->config = $config;
-        $this->logger = $logger;
     }
 
     /**

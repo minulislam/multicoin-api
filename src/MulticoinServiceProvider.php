@@ -76,7 +76,7 @@ class MulticoinServiceProvider extends ServiceProvider
     protected function registerFactory()
     {
         $this->app->singleton('multicoin', function ($app) {
-            return new MulticoinFactory(config('multicoin'), $app['log']);
+            return new MulticoinFactory(config('multicoin'));
         });
         /*  $this->app->singleton('blockbook', function ($app) {
             return new BlockbookFactory(config('blockbook'), $app['log']);
