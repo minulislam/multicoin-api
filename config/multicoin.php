@@ -1,9 +1,16 @@
 <?php
+
 return [
-    'key'      => 'DxjEMVbXapaRImw',
-    'token'    => 'DxjEMVbXapaRImw',
-    'url'      => 'http://multicoin.l4zym1nd.net/api/v1/',
-    'currency' => [
+    'key'             => 'DxjEMVbXapaRImw',
+    'webhook_token'   => 'DxjEMVbXapaRImw',
+    'url'             => 'http://apiendpoint',
+    'path'            => 'multicoin',
+    'currency_backup' => [
+        'bitcoin'     => 'BTC',
+        'bitcoinTest' => 'TBTC',
+        'litecoin'    => 'LTC',
+    ],
+    'currency'        => [
         'BTC',
         'TBTC',
         'LTC',

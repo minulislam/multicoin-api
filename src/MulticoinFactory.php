@@ -2,7 +2,6 @@
 
 namespace Multicoin\Api;
 
-use Psr\Log\LoggerInterface;
 use InvalidArgumentException;
 use Multicoin\Api\Multicoin as Multicoincurrency;
 
@@ -16,13 +15,6 @@ class MulticoinFactory
     protected $config;
 
     /**
-     * Laravel log writer.
-     *
-     * @var \Illuminate\Log\Writer
-     */
-    protected $logger;
-
-    /**
      * currency instances.
      *
      * @var array
@@ -32,14 +24,12 @@ class MulticoinFactory
     /**
      * Constructs currency factory instance.
      *
-     * @param  array                    $config
-     * @param  \Psr\Log\LoggerInterface $logger
+     * @param  array  $config
      * @return void
      */
-    public function __construct(array $config, LoggerInterface $logger)
+    public function __construct(array $config)
     {
         $this->config = $config;
-        $this->logger = $logger;
     }
 
     /**
@@ -48,7 +38,7 @@ class MulticoinFactory
      * @param  array   $config
      * @return array
      */
-    protected function withDefaults(array $config = [], string $name): array
+    protected function withDefaults(array $config, string $name): array
     {
         return array_merge(['coin' => $name], $config);
     }
@@ -61,7 +51,9 @@ class MulticoinFactory
      */
     public function getConfig(string $name = 'BTC'): array
     {
-        if (!array_key_exists($name, $this->config['currency'])) {
+        $flip_currency = array_flip($this->config['currency']);
+
+        if (! array_key_exists($name, $flip_currency)) {
             throw new InvalidArgumentException(
                 "Could not find currency configuration [$name]"
             );
@@ -78,7 +70,7 @@ class MulticoinFactory
      */
     public function currency(string $name = 'BTC'): Multicoincurrency
     {
-        if (!array_key_exists($name, $this->currencys)) {
+        if (! array_key_exists($name, $this->currencys)) {
             $config = $this->getConfig($name);
 
             $this->currencys[$name] = $this->make($config);
@@ -110,5 +102,4 @@ class MulticoinFactory
         return $this->currency()->{$method}
         (...$parameters);
     }
-
 }

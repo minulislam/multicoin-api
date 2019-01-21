@@ -2,43 +2,18 @@
 
 namespace Multicoin\Api;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class MulticoinServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-    /**
      * Bootstrap the application services.
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/multicoin.php' => config_path('multicoin.php'),
-            ], 'config');
-            $this->mergeConfigFrom(__DIR__.'/../config/multicoin.php', 'multicoin');
-
-            /*  $this->publishes([
-                __DIR__.'/../src/migrations/' => database_path('migrations'),
-            ], 'migrations');
-
-            $this->loadViewsFrom(__DIR__.'/../resources/views', 'multicoin');
-
-            $this->publishes([
-                __DIR__.'/../resources/views' => base_path('resources/views/vendor/multicoin'),
-            ], 'views');
-
-             $this->loadRoutesFrom(__DIR__.'/routes.php');
-
-              $this->loadMigrationsFrom(__DIR__.'/path/to/migrations');
-            */
-        }
-
+        $this->registerPublishing();
+        $this->registerRoutes();
     }
 
     /**
@@ -46,11 +21,11 @@ class MulticoinServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerAliases();
+        $this->mergeConfigFrom(__DIR__.'/../config/multicoin.php', 'multicoin');
 
+        $this->registerAliases();
         $this->registerFactory();
         $this->registerClient();
-
     }
 
     /**
@@ -69,9 +44,7 @@ class MulticoinServiceProvider extends ServiceProvider
             foreach ((array) $aliases as $alias) {
                 $this->app->alias($key, $alias);
             }
-
         }
-
     }
 
     /**
@@ -82,7 +55,7 @@ class MulticoinServiceProvider extends ServiceProvider
     protected function registerFactory()
     {
         $this->app->singleton('multicoin', function ($app) {
-            return new MulticoinFactory(config('multicoin'), $app['log']);
+            return new MulticoinFactory(config('multicoin'));
         });
         /*  $this->app->singleton('blockbook', function ($app) {
             return new BlockbookFactory(config('blockbook'), $app['log']);
@@ -101,14 +74,28 @@ class MulticoinServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
+    private function registerRoutes()
     {
-        return [Multicoin::class];
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
+        });
     }
 
+    private function routeConfiguration()
+    {
+        return [
+            'namespace'  => 'Multicoin\Api\Http\Controllers',
+            'prefix'     => config('multcoin.path'),
+            'middleware' => 'guest:api',
+        ];
+    }
+
+    private function registerPublishing()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/multicoin.php' => config_path('multicoin.php'),
+            ], 'config');
+        }
+    }
 }

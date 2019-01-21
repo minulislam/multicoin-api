@@ -4,71 +4,70 @@ namespace Multicoin\Api\Traits;
 
 trait Address
 {
-    public function __construct()
-    {
-        parent::construct();
-    }
-
     public function addressNew()
     {
-        /**
-         * [GET api/v1/{coin}/addr/new]
-         */
-        $url      = $this->coin.'/addr/new';
+        $url = $this->buildUrl('/addr/new');
+
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function addressBalance()
+    public function addressBalance($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/balance
-         */
-        $url      = $this->coin.'/addr/'.$this->address.'/balance';
+        $url = $this->buildUrl('/addr/'.$address.'/balance');
         $response = $this->doGet($url);
-        return $response;
 
+        return $response;
     }
 
-    public function addressDetails()
+    public function address($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}
-         */
-        $url      = $this->coin.'/addr/'.$this->address;
+        $url = $this->buildUrl('/addr/'.$address);
         $response = $this->doGet($url);
-        return $response;
 
+        return $response;
     }
 
-    public function addressTxs()
+    public function addressTxs($address, array $param = [])
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/txs
-         */
-        $url      = $this->coin.'/addr/'.$this->address.'/txs';
+        $default = ['confirms' => 0];
+        $url = $this->buildUrl('/addr/'.$address.'/txs');
+        $url .= '?'.$this->buildQueryParam($default, $param);
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function addressUtxs()
+    public function addressUtxo($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/utxo
-         */
-        $url      = $this->coin.'/addr/'.$this->address.'/utxo';
+        $url = $this->buildUrl('/addr/'.$address.'/utxo');
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function addressValidate()
+    public function addressValidate($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/validate
-         */
-        $url      = $this->coin.'/addr/'.$this->address.'/validate';
+        $url = $this->buildUrl('/addr/'.$address.'/validate');
         $response = $this->doGet($url);
+
         return $response;
     }
 
+    public function transactionsFromDb($address)
+    {
+        $url = $this->buildUrl('/'.$address.'/txfromdb');
+        $response = $this->doGet($url);
+
+        return $response;
+    }
+
+    public function transactionsFromApi($address)
+    {
+        $url = $this->buildUrl('/'.$address.'/txfromapi');
+        $response = $this->doGet($url);
+
+        return $response;
+    }
 }

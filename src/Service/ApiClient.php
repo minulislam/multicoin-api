@@ -5,14 +5,16 @@ namespace Multicoin\Api\Service;
 use Http\Client\HttpClient;
 use Http\Message\UriFactory;
 use Http\Message\RequestFactory;
+use Illuminate\Support\Collection;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\Common\Plugin\BaseUriPlugin;
+use Http\Client\Common\Exception\ClientErrorException;
 
-abstract class ApiClient
+class ApiClient
 {
     /**
      * @var RequestFactory
@@ -22,10 +24,9 @@ abstract class ApiClient
     /**
      * @var HttpClient
      */
-    private $httpClient;
-    private $client;
-    private $plugins = [];
-    public $coin;
+    protected $httpClient;
+    protected $client;
+    protected $plugins = [];
 
     /**
      * @var UriFactory
@@ -40,47 +41,64 @@ abstract class ApiClient
         RequestFactory $requestFactory = null
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
-        $this->httpClient     = $httpClient ?: HttpClientDiscovery::find();
+        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
 
         $this->uriFactory = new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($baseUrl), ['replace' => $replace]);
         $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
 
         $this->client = $this->getHttpClient();
-
     }
 
     public function addPlugins($plugin)
     {
         $this->plugins = array_merge($this->plugins, $plugin);
-        $this->client  = $this->getHttpClient();
-        return $this;
+        $this->client = $this->getHttpClient();
 
+        return $this;
     }
+
     public function getHttpClient()
     {
         return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
-
     }
 
     public function getPluginClient()
     {
         return new PluginClient($this->httpClient, $this->plugins);
-
     }
 
-    public function doGet(string $url, array $data = []):  ? array
+    public function doGet(string $url):  ? Collection
     {
-        $response = $this->client->get($url, $data);
+        try {
+            $request = $this->client->get($url);
+            $response = $request->getBody()->getContents();
+        } catch (ClientErrorException $e) {
+            throw new \Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+            return collect([
+                'code'   => $e->getCode(),
+                'reason' => $e->getMessage(),
+            ]);
+        }
 
-        return json_decode((string) $response->getBody(), true);
-
+        return $this->responseResult($response);
     }
+
     public function doPost(string $url, array $data = []) :  ? array
     {
-        $response = $this->client->get($url);
-        return json_decode((string) $response->getBody(), true);
+        $request = $this->client->post($url, $data);
+        $response = $request->getBody()->getContents();
 
+        return $this->responseResult($response);
     }
-    abstract public function getcurrency();
 
+    protected function responseResult(? string $response) :  ? Collection
+    {
+        $data = json_decode($response, true);
+
+        if (isset($data['error'])) {
+            throw new \Exception($data['error']['message']);
+        }
+
+        return collect($data);
+    }
 }

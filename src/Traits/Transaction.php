@@ -1,61 +1,46 @@
 <?php
+
 namespace Multicoin\Api\Traits;
 
 trait Transaction
 {
-    public function __construct()
+    public function transactionsFromDb($address)
     {
-        parent::construct();
-    }
-
-    public function transactionsFromDb()
-    {
-        /**
-         * [ GET api/v1/{coin}/{address}/txfromdb ]
-         */
-        $url      = $this->coin.'/'.$this->address.'/txfromdb';
+        $url = $this->buildUrl('/'.$address.'/txfromdb');
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function transactionsFromApi()
+    public function transactionsFromApi($address)
     {
-        /**
-         * [ GET api/v1/{coin}/{address}/txfromapi ]
-         */
-        $url      = $this->coin.'/'.$this->address.'/txfromapi';
+        $url = $this->buildUrl('/'.$address.'/txfromapi');
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function transactionsDetails()
+    public function transaction($txid)
     {
-        /**
-         * [ GET api/v1/{coin}/tx/{txid} ]
-         */
-        $url      = $this->coin.'/tx/'.$this->txid;
+        $url = $this->buildUrl('/tx/'.$txid);
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function transactionsIsValidated()
+    public function transactionValidate($txid)
     {
-        /**
-         * [GET api/v1/{coin}/tx/{txid}/validate ]
-         */
-        $url      = $this->coin.'/tx/'.$this->txid.'/validate';
+        $url = $this->buildUrl('/tx/'.$txid.'/validate');
         $response = $this->doGet($url);
+
         return $response;
     }
 
-    public function transactionsConfirmations()
+    public function transactionConfirmations($txid)
     {
-        /**
-         * [GET api/v1/{coin}/tx/{txid}/confirmations ]
-         */
-        $url      = $this->coin.'/tx/'.$this->txid.'/confirmations';
+        $url = $this->buildUrl('/tx/'.$txid.'/confirmations');
         $response = $this->doGet($url);
+
         return $response;
     }
-
 }

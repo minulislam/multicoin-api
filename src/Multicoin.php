@@ -2,29 +2,36 @@
 
 namespace Multicoin\Api;
 
+use Multicoin\Api\Traits\User;
 use Multicoin\Api\Traits\Address;
 use Multicoin\Api\Traits\Invoice;
+use Multicoin\Api\Traits\Currency;
 use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Transaction;
 use Http\Message\Authentication\Bearer;
+use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Common\Plugin\RetryPlugin;
+use Http\Client\Common\Plugin\DecoderPlugin;
+use Http\Client\Common\Plugin\HeaderSetPlugin;
+use Http\Client\Common\Plugin\QueryDefaultsPlugin;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
 
 class Multicoin extends ApiClient
 {
     use Address, Invoice, Transaction;
-    public $apiKey;
-    public $url;
-    //  public $coin;
-    private $address;
-    private $txid;
+    use User, Currency;
+
+    public $coin;
+
     protected $config;
+
     public function __construct(array $config = [])
     {
         $this->config = $config;
-
-        parent::construct(
+        $this->coin = $config['coin'];
+        parent::__construct(
             $this->setUrl($this->config['url']),
-            [$this->setAuth($this->config['key'])]
+            $this->setAuth($this->config['key'])
         );
     }
 
@@ -34,38 +41,45 @@ class Multicoin extends ApiClient
             $apiKey = config('multicoin.key');
         }
 
-        $authentication       = new Bearer($apiKey);
+        $authentication = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
-        return $authenticationPlugin;
+        $decoderPlugin = new DecoderPlugin();
+        $headerSetPlugin = new HeaderSetPlugin([
+
+            'Accept' => 'application/json',
+        ]);
+        $queryDefaultsPlugin = new QueryDefaultsPlugin([
+            'currency' => 'btc',
+        ]);
+
+        return [
+            $authenticationPlugin,
+            $decoderPlugin,
+            $headerSetPlugin,
+            new RetryPlugin(),
+            new ErrorPlugin(),
+        ];
     }
 
     public function setUrl($url = null)
     {
         if (null === $url) {
-            $this->url = config('multicoin.url');
-            return $this;
+            return config('multicoin.url');
         }
 
         return $url;
-
     }
 
-    public function getcurrency()
+    public function buildUrl($url)
     {
-        $this->coin = $this->config['coin'];
-        return $this;
+        return '/'.trim($this->coin, '/').$url;
     }
 
-    public function address(string $address): self
+    public function buildQueryParam(array $default, array $param = [])
     {
-        $this->address = $address;
-        return $this;
-    }
+        //$data = array_filter(array_merge($default, $param), 'strlen');
+        $params = array_merge($default, $param);
 
-    public function txid(string $txid): self
-    {
-        $this->txid = $txid;
-        return $this;
+        return http_build_query($params);
     }
-
 }

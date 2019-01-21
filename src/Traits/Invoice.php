@@ -4,39 +4,36 @@ namespace Multicoin\Api\Traits;
 
 trait Invoice
 {
-    public function __construct()
+    public function createInvoice(array $param = [])
     {
-        parent::construct();
-    }
+        $default = [
+            'user_id'  => '',
+            'callback' => '',
+            'forward'  => 1,
+            'amount'   => 0.00,
+            'address'  => '',
+        ];
 
-    public function createInvoice()
-    {
-        /**
-         * [ GET api/v1/{coin}/receive ]
-         */
-        $url      = $this->coin.'/receive';
+        $url = $this->buildUrl('/receive');
+        $url .= '?'.$this->buildQueryParam($default, $param);
         $response = $this->doGet($url);
+
         return $response;
     }
 
     public function unpaidInvoice()
     {
-        /**
-         * [ GET api/v1/{coin}/unpaid-invoices ]
-         */
-        $url      = $this->coin.'/addr/'.'/unpaid-invoices';
+        $url = $this->buildUrl('/unpaid-invoices');
         $response = $this->doGet($url);
+
         return $response;
     }
 
     public function paidInvoice()
     {
-        /**
-         * [ GET api/v1/{coin}/paid-invoices ]
-         */
-        $url      = $this->coin.'/addr/'.'/unpaid-invoices';
+        $url = $this->buildUrl('/paid-invoices');
         $response = $this->doGet($url);
+
         return $response;
     }
-
 }
