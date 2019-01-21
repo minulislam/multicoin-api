@@ -6,7 +6,7 @@ trait User
 {
     public function coreBalance()
     {
-        $url = '/user/core-balance';
+        $url      = '/user/core-balance';
         $response = $this->doGet($url);
 
         return $response;
@@ -14,7 +14,7 @@ trait User
 
     public function balance()
     {
-        $url = $this->buildUrl('/balance');
+        $url      = '/user/'.$this->coin.'/balance';
         $response = $this->doGet($url);
 
         return $response;
@@ -22,7 +22,7 @@ trait User
 
     public function info()
     {
-        $url = '/user';
+        $url      = '/user';
         $response = $this->doGet($url);
 
         return $response;
