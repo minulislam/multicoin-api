@@ -8,6 +8,8 @@ use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Transaction;
 use Http\Message\Authentication\Bearer;
 use Http\Client\Common\Plugin\DecoderPlugin;
+use Http\Client\Common\Plugin\HeaderSetPlugin;
+use Http\Client\Common\Plugin\QueryDefaultsPlugin;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
 
 class Multicoin extends ApiClient
@@ -37,7 +39,15 @@ class Multicoin extends ApiClient
         $authentication       = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
         $decoderPlugin        = new DecoderPlugin();
-        return [$authenticationPlugin, $decoderPlugin];
+        $headerSetPlugin      = new HeaderSetPlugin([
+
+            'Accept' => 'application/json',
+        ]);
+        $queryDefaultsPlugin = new QueryDefaultsPlugin([
+            'locale' => 'en',
+        ]);
+
+        return [$authenticationPlugin, $decoderPlugin, $headerSetPlugin];
     }
 
     public function setUrl($url = null)
