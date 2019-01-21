@@ -6,13 +6,17 @@ trait Currency
 {
     public function activeCurrencys()
     {
-        $url      = '/currency';
+        $url = '/currency';
         $response = $this->doGet($url);
+
         return $response;
-    }public function currency()
+    }
+
+    public function currency()
     {
-        $url      = $this->buildUrl('/index');
+        $url = $this->buildUrl('/index');
         $response = $this->doGet($url);
+
         return $response;
     }
 }
