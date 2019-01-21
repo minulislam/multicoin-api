@@ -10,7 +10,73 @@
 
  
  
-```
+``` php
+<?php
+
+require './vendor/autoload.php';
+use Multicoin\Api\Multicoin;
+$config = [
+    'key'   => 'apikey',
+    'token' => 'apitoken',
+    'url'   => 'http://apiendpoint/api/v1/',
+    'coin'  => 'TBTC',
+
+];
+$address = 'currencyAddress';
+$txid    = 'TransactionID';
+
+$api     = new Multicoin($config);
+
+
+$invoice = $api->createInvoice(['user_id' => 1]);
+d($invoice);
+
+$addressNew = $api->addressNew();
+ 
+
+$addressInfo = $api->address($address);
+ 
+
+$addressBalance = $api->addressBalance($address);
+ 
+
+$addressTxs = $api->addressTxs($address);
+ 
+ 
+
+$addressValidate = $api->addressValidate($address);
+ 
+
+$unpaidInvoice = $api->unpaidInvoice();
+ 
+
+$paidInvoice = $api->paidInvoice();
+ 
+
+$transaction = $api->transaction($txid);
+ 
+
+$transactionValidate = $api->transactionValidate($txid);
+ 
+
+$transactionConfirmations = $api->transactionConfirmations($txid);
+ 
+
+$coreBalance = $api->coreBalance();
+ 
+
+$balance = $api->balance();
+ 
+
+$info = $api->info();
+ 
+
+$currency = $api->currency('TBTC');
+ 
+
+$activeCurrencys = $api->activeCurrencys();
+
+
 
 ### Testing
 
@@ -32,20 +98,5 @@ composer test
         "nyholm/psr7": "^0.2.2"
     },
 ### Changelog
-  "require": {
-        "php": "^7.1",
-        "php-http/httplug": "^1.0 || ^2.0",
-        "php-http/discovery": "^1.4",
-         "php-http/message": "^1.0",
-        "php-http/client-implementation": "^1.0",
-        "php-http/async-client-implementation": "^1.0",
-        "guzzlehttp/psr7": "^1.0",
-        "psr/http-message": "^1.0"
-    },
-    "require-dev": {
-        "larapack/dd": "^1.0",
-        "phpunit/phpunit": "^7.0",
-        "php-http/mock-client": "^1.0",
-        "squizlabs/php_codesniffer": "^2.7"
-    },
+ 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed  
