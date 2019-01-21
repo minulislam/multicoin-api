@@ -22,7 +22,7 @@ class Multicoin extends ApiClient
     {
         $this->config = $config;
 
-        parent::construct(
+        parent::__construct(
             $this->setUrl($this->config['url']),
             [$this->setAuth($this->config['key'])]
         );
