@@ -59,5 +59,4 @@ class RequestFailedException extends Exception
     {
         return $this->httpResponse;
     }
-
 }

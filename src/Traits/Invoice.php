@@ -15,7 +15,7 @@ trait Invoice
         ];
         //$data = array_merge($defaultParams, $params);
         $data = array_values(array_filter(array_merge($defaultParams, $params)));
-        $url  = $this->buildUrlParam('/receive');
+        $url = $this->buildUrlParam('/receive');
         $url .= '?'.http_build_query($data);
         $response = $this->doGet($url);
 
@@ -24,7 +24,7 @@ trait Invoice
 
     public function unpaidInvoice()
     {
-        $url      = $this->buildUrlParam('/unpaid-invoices');
+        $url = $this->buildUrlParam('/unpaid-invoices');
         $response = $this->doGet($url);
 
         return $response;
@@ -32,10 +32,9 @@ trait Invoice
 
     public function paidInvoice()
     {
-        $url      = $this->buildUrlParam('/paid-invoices');
+        $url = $this->buildUrlParam('/paid-invoices');
         $response = $this->doGet($url);
 
         return $response;
     }
-
 }

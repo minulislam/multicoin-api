@@ -15,7 +15,7 @@ trait Address
 
     public function addressBalance($address)
     {
-        $url      = $this->buildUrlParam('/addr/'.$address.'/balance');
+        $url = $this->buildUrlParam('/addr/'.$address.'/balance');
         $response = $this->doGet($url);
 
         return $response;
@@ -23,7 +23,7 @@ trait Address
 
     public function address($address)
     {
-        $url      = $this->buildUrlParam('/addr/'.$address);
+        $url = $this->buildUrlParam('/addr/'.$address);
         $response = $this->doGet($url);
 
         return $response;
@@ -31,7 +31,7 @@ trait Address
 
     public function addressTxs($address)
     {
-        $url      = $this->buildUrlParam('/addr/'.$address.'/txs');
+        $url = $this->buildUrlParam('/addr/'.$address.'/txs');
         $response = $this->doGet($url);
 
         return $response;
@@ -39,7 +39,7 @@ trait Address
 
     public function addressUtxo($address)
     {
-        $url      = $this->buildUrlParam('/addr/'.$address.'/utxo');
+        $url = $this->buildUrlParam('/addr/'.$address.'/utxo');
         $response = $this->doGet($url);
 
         return $response;
@@ -47,7 +47,7 @@ trait Address
 
     public function addressValidate($address)
     {
-        $url      = $this->buildUrlParam('/addr/'.$address.'/validate');
+        $url = $this->buildUrlParam('/addr/'.$address.'/validate');
         $response = $this->doGet($url);
 
         return $response;
