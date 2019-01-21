@@ -16,7 +16,14 @@ $api     = new Multicoin($config);
 /*$traits = class_uses_recursive(Multicoin::class);
 d($traits);
 $classMethod = collect(get_class_methods($api));*/
-/*["__construct","setAuth","setUrl","buildUrl","buildQueryParam","addPlugins","getHttpClient","getPluginClient","doGet","doPost","addressNew","addressBalance","address","addressTxs","addressUtxo","addressValidate","transactionsFromDb","transactionsFromApi","createInvoice","unpaidInvoice","paidInvoice","transaction","transactionValidate","transactionConfirmations","coreBalance","balance","info","activeCurrencys","currency"]*/
+
+$method = ['__construct', 'setAuth', 'setUrl', 'buildUrl', 'buildQueryParam',
+    'addPlugins', 'getHttpClient', 'getPluginClient', 'doGet', 'doPost',
+    'addressNew', 'addressBalance', 'address', 'addressTxs', 'addressUtxo',
+    'addressValidate', 'transactionsFromDb', 'transactionsFromApi',
+    'createInvoice', 'unpaidInvoice', 'paidInvoice', 'transaction', 'transactionValidate',
+    'transactionConfirmations', 'coreBalance', 'balance', 'info',
+    'activeCurrencys', 'currency'];
 
 $invoice = $api->createInvoice(['user_id' => 1]);
 d($invoice);
