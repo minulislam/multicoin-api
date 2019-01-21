@@ -4,9 +4,19 @@ namespace Multicoin\Api\Traits;
 
 trait Invoice
 {
-    public function createInvoice()
+    public function createInvoice(array $params = [])
     {
-        $url      = $this->buildUrlParam('/receive');
+        $defaultParams = [
+            'user_id'  => '',
+            'callback' => '',
+            'forward'  => 0,
+            'amount'   => 0.00,
+            'address'  => '',
+        ];
+        $data = array_merge($defaultParams, $params);
+        $data = array_filter($data);
+        $url  = $this->buildUrlParam('/receive');
+        $url .= '?'.http_build_query($data);
         $response = $this->doGet($url);
 
         return $response;
@@ -27,4 +37,5 @@ trait Invoice
 
         return $response;
     }
+
 }

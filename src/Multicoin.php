@@ -7,6 +7,8 @@ use Multicoin\Api\Traits\Invoice;
 use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Transaction;
 use Http\Message\Authentication\Bearer;
+use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\Plugin\QueryDefaultsPlugin;
@@ -44,10 +46,16 @@ class Multicoin extends ApiClient
             'Accept' => 'application/json',
         ]);
         $queryDefaultsPlugin = new QueryDefaultsPlugin([
-            'locale' => 'en',
+            'currency' => 'btc',
         ]);
 
-        return [$authenticationPlugin, $decoderPlugin, $headerSetPlugin];
+        return [
+            $authenticationPlugin,
+            $decoderPlugin,
+            $headerSetPlugin,
+            new RetryPlugin(),
+            new ErrorPlugin(),
+        ];
     }
 
     public function setUrl($url = null)
