@@ -4,11 +4,6 @@ namespace Multicoin\Api\Traits;
 
 trait Invoice
 {
-    public function __construct()
-    {
-        parent::construct();
-    }
-
     public function createInvoice()
     {
         /**

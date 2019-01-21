@@ -4,11 +4,6 @@ namespace Multicoin\Api\Traits;
 
 trait Address
 {
-    public function __construct()
-    {
-        parent::construct();
-    }
-
     public function addressNew()
     {
         /**

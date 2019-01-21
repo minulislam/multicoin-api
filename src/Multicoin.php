@@ -56,16 +56,4 @@ class Multicoin extends ApiClient
         return $this;
     }
 
-    public function address(string $address): self
-    {
-        $this->address = $address;
-        return $this;
-    }
-
-    public function txid(string $txid): self
-    {
-        $this->txid = $txid;
-        return $this;
-    }
-
 }

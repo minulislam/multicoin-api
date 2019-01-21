@@ -3,10 +3,10 @@ namespace Multicoin\Api\Traits;
 
 trait Transaction
 {
-    public function __construct()
+    /*public function __construct()
     {
         parent::construct();
-    }
+    }*/
 
     public function transactionsFromDb()
     {
