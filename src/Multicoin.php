@@ -14,7 +14,7 @@ class Multicoin extends ApiClient
     use Address, Invoice, Transaction;
     public $apiKey;
     public $url;
-    //  public $coin;
+    public $coin;
     private $address;
     private $txid;
     protected $config;
@@ -53,7 +53,7 @@ class Multicoin extends ApiClient
     public function getcurrency()
     {
         $this->coin = $this->config['coin'];
-        return $this;
+        return $this->coin;
     }
 
 }

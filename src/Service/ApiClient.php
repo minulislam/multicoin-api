@@ -25,7 +25,6 @@ abstract class ApiClient
     private $httpClient;
     private $client;
     private $plugins = [];
-    public $coin;
 
     /**
      * @var UriFactory
@@ -70,14 +69,14 @@ abstract class ApiClient
 
     public function doGet(string $url, array $data = []):  ? array
     {
-        $response = $this->client->get($url, $data);
+        $response = $this->client->get($this->getcurrency().'/'.$url);
 
         return json_decode((string) $response->getBody(), true);
 
     }
     public function doPost(string $url, array $data = []) :  ? array
     {
-        $response = $this->client->get($url);
+        $response = $this->client->get($this->getcurrency().'/'.$url, $data);
         return json_decode((string) $response->getBody(), true);
 
     }
