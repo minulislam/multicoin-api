@@ -4,6 +4,25 @@ namespace Multicoin\Api\Traits;
 
 trait Transaction
 {
+<<<<<<< .merge_file_Cx9bgH
+    public function transactionsFromDb($address)
+    {
+        $url      = $this->buildUrl('/'.$address.'/txfromdb');
+        $response = $this->doGet($url);
+
+        return $response;
+    }
+
+    public function transactionsFromApi($address)
+    {
+        $url      = $this->buildUrl('/'.$address.'/txfromapi');
+        $response = $this->doGet($url);
+
+        return $response;
+    }
+
+=======
+>>>>>>> .merge_file_4HsUxk
     public function transaction($txid)
     {
         $url      = $this->buildUrl('/tx/'.$txid);
