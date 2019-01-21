@@ -26,7 +26,6 @@ class MulticoinServiceProvider extends ServiceProvider
         $this->registerAliases();
         $this->registerFactory();
         $this->registerClient();
-
     }
 
     /**
@@ -45,9 +44,7 @@ class MulticoinServiceProvider extends ServiceProvider
             foreach ((array) $aliases as $alias) {
                 $this->app->alias($key, $alias);
             }
-
         }
-
     }
 
     /**
@@ -99,9 +96,6 @@ class MulticoinServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/multicoin.php' => config_path('multicoin.php'),
             ], 'config');
-
         }
-
     }
-
 }

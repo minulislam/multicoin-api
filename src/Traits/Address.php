@@ -16,53 +16,55 @@ trait Address
     public function addressBalance()
     {
         /**
-         * GET api/v1/{coin}/addr/{address}/balance
+         * GET api/v1/{coin}/addr/{address}/balance.
          */
-        $url      = $this->buildUrlParam('/addr/'.$this->address.'/balance');
+        $url = $this->buildUrlParam('/addr/'.$this->address.'/balance');
         $response = $this->doGet($url);
-        return $response;
 
+        return $response;
     }
 
     public function addressDetails()
     {
         /**
-         * GET api/v1/{coin}/addr/{address}
+         * GET api/v1/{coin}/addr/{address}.
          */
-        $url      = $this->buildUrlParam('/addr/'.$this->address);
+        $url = $this->buildUrlParam('/addr/'.$this->address);
         $response = $this->doGet($url);
-        return $response;
 
+        return $response;
     }
 
     public function addressTxs()
     {
         /**
-         * GET api/v1/{coin}/addr/{address}/txs
+         * GET api/v1/{coin}/addr/{address}/txs.
          */
-        $url      = $this->buildUrlParam('/addr/'.$this->address.'/txs');
+        $url = $this->buildUrlParam('/addr/'.$this->address.'/txs');
         $response = $this->doGet($url);
+
         return $response;
     }
 
     public function addressUtxs()
     {
         /**
-         * GET api/v1/{coin}/addr/{address}/utxo
+         * GET api/v1/{coin}/addr/{address}/utxo.
          */
-        $url      = $this->buildUrlParam('/addr/'.$this->address.'/utxo');
+        $url = $this->buildUrlParam('/addr/'.$this->address.'/utxo');
         $response = $this->doGet($url);
+
         return $response;
     }
 
     public function addressValidate()
     {
         /**
-         * GET api/v1/{coin}/addr/{address}/validate
+         * GET api/v1/{coin}/addr/{address}/validate.
          */
-        $url      = $this->buildUrlParam('/addr/'.$this->address.'/validate');
+        $url = $this->buildUrlParam('/addr/'.$this->address.'/validate');
         $response = $this->doGet($url);
+
         return $response;
     }
-
 }

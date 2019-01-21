@@ -20,6 +20,7 @@ abstract class HttpServiceAsync
     protected $options = [];
 
     protected $apiKey;
+
     /**
      * @param HttpAsyncClient|null $httpAsyncClient
      * @param RequestFactory|null  $requestFactory
@@ -28,19 +29,23 @@ abstract class HttpServiceAsync
     public function __construct(HttpAsyncClient $httpAsyncClient = null, RequestFactory $requestFactory = null, array $options = [])
     {
         $this->httpAsyncClient = $httpAsyncClient ?: HttpAsyncClientDiscovery::find();
-        $this->requestFactory  = $requestFactory ?: MessageFactoryDiscovery::find();
+        $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
         $this->processOptions($options);
         $this->options = $options;
     }
+
     public function getBaseUrl()
     {
         return $this->baseUrl;
     }
+
     public function setBaseUrl(string $url)
     {
         $this->baseUrl = $url;
+
         return $this;
     }
+
     public function getApiKey()
     {
         return $this->apiKey;
@@ -49,6 +54,7 @@ abstract class HttpServiceAsync
     public function setApiKey(string $key)
     {
         $this->apiKey = $key;
+
         return $this;
     }
 
@@ -69,6 +75,7 @@ abstract class HttpServiceAsync
     protected function getResponse($url, array $params = []): ResponseInterface
     {
         $promise = $this->httpAsyncClient->sendAsyncRequest($this->buildRequest($url, $params));
+
         return $promise->then(function (ResponseInterface $response) {
             file_put_contents('responses.log', $response->getStatusCode()."\n", FILE_APPEND);
 
@@ -79,5 +86,4 @@ abstract class HttpServiceAsync
             }
         );
     }
-
 }

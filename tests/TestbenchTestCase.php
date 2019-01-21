@@ -17,6 +17,7 @@ abstract class TestbenchTestCase extends Testbench
     {
         parent::setUp();
     }
+
     /**
      * Tear down after each test.
      * @return void
@@ -25,6 +26,7 @@ abstract class TestbenchTestCase extends Testbench
     {
         parent::tearDown();
     }
+
     /**
      * Tell Testbench to use this package.
      * @param  $app
@@ -34,6 +36,7 @@ abstract class TestbenchTestCase extends Testbench
     {
         return [MulticoinServiceProvider::class];
     }
+
     protected function getPackageAliases($app)
     {
         return [
