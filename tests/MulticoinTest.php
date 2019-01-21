@@ -2,8 +2,6 @@
 
 namespace Multicoin\Api\Tests;
 
-use Multicoin\Api\Facades\Multicoin;
-
 class MulticoinTest extends TestbenchTestCase
 {
     public function testExample()

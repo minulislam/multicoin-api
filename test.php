@@ -2,7 +2,7 @@
 
 require './vendor/autoload.php';
 use Multicoin\Api\Multicoin;
-use Http\Client\Common\Plugin\AuthenticationPlugin;
+
 $config = [
     'key'   => 'DxjEMVbXapaRImw',
     'token' => 'DxjEMVbXapaRImw',
@@ -11,7 +11,7 @@ $config = [
 
 ];
 
-$api  = new Multicoin($config);
+$api = new Multicoin($config);
 $user = $api->addressNew();
 dd($user);
 //echo '<pre>'.print_r($user->getBody()->getContents(), true).'</pre>';
