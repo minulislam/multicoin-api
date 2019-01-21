@@ -14,13 +14,17 @@ You can install the package via composer:
 
 ```bash
 composer require spatie/multicoin-client
+
+
 ```
 
 ## Usage
 
 ``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+$address=Multicoin::address('afdssdsgsaegawe');
+$balance= $address->addressBalance();
+$tx=$address->addressTransaction();
+ 
 ```
 
 ### Testing
@@ -92,3 +96,6 @@ All pledges will be dedicated to allocating workforce on maintenance and new awe
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[^1]
+[^1]: 

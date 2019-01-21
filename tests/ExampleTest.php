@@ -1,12 +1,14 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Multicoin\Api\Tests;
 
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /** @test */
+    /**
+     * @test
+     */
     public function true_is_true()
     {
         $this->assertTrue(true);
