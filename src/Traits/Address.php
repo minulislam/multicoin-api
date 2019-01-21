@@ -13,56 +13,41 @@ trait Address
         return $response;
     }
 
-    public function addressBalance()
+    public function addressBalance($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/balance.
-         */
-        $url = $this->buildUrlParam('/addr/'.$this->address.'/balance');
+        $url      = $this->buildUrlParam('/addr/'.$address.'/balance');
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function addressDetails()
+    public function address($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}.
-         */
-        $url = $this->buildUrlParam('/addr/'.$this->address);
+        $url      = $this->buildUrlParam('/addr/'.$address);
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function addressTxs()
+    public function addressTxs($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/txs.
-         */
-        $url = $this->buildUrlParam('/addr/'.$this->address.'/txs');
+        $url      = $this->buildUrlParam('/addr/'.$address.'/txs');
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function addressUtxs()
+    public function addressUtxo($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/utxo.
-         */
-        $url = $this->buildUrlParam('/addr/'.$this->address.'/utxo');
+        $url      = $this->buildUrlParam('/addr/'.$address.'/utxo');
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function addressValidate()
+    public function addressValidate($address)
     {
-        /**
-         * GET api/v1/{coin}/addr/{address}/validate.
-         */
-        $url = $this->buildUrlParam('/addr/'.$this->address.'/validate');
+        $url      = $this->buildUrlParam('/addr/'.$address.'/validate');
         $response = $this->doGet($url);
 
         return $response;

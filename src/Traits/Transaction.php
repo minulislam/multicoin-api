@@ -4,61 +4,41 @@ namespace Multicoin\Api\Traits;
 
 trait Transaction
 {
-    /*public function __construct()
+    public function transactionsFromDb($address)
     {
-        parent::construct();
-    }*/
-
-    public function transactionsFromDb()
-    {
-        /**
-         * [ GET api/v1/{coin}/{address}/txfromdb ].
-         */
-        $url = $this->buildUrlParam('/'.$this->address.'/txfromdb');
+        $url      = $this->buildUrlParam('/'.$address.'/txfromdb');
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function transactionsFromApi()
+    public function transactionsFromApi($address)
     {
-        /**
-         * [ GET api/v1/{coin}/{address}/txfromapi ].
-         */
-        $url = $this->buildUrlParam('/'.$this->address.'/txfromapi');
+        $url      = $this->buildUrlParam('/'.$address.'/txfromapi');
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function transactionsDetails()
+    public function transaction($txid)
     {
-        /**
-         * [ GET api/v1/{coin}/tx/{txid} ].
-         */
-        $url = $this->buildUrlParam('/tx/'.$this->txid);
+        $url      = $this->buildUrlParam('/tx/'.$txid);
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function transactionsIsValidated()
+    public function transactionValidate($txid)
     {
-        /**
-         * [GET api/v1/{coin}/tx/{txid}/validate ].
-         */
-        $url = $this->buildUrlParam('/tx/'.$this->txid.'/validate');
+        $url      = $this->buildUrlParam('/tx/'.$txid.'/validate');
         $response = $this->doGet($url);
 
         return $response;
     }
 
-    public function transactionsConfirmations()
+    public function transactionConfirmations($txid)
     {
-        /**
-         * [GET api/v1/{coin}/tx/{txid}/confirmations ].
-         */
-        $url = $this->buildUrlParam('/tx/'.$this->txid.'/confirmations');
+        $url      = $this->buildUrlParam('/tx/'.$txid.'/confirmations');
         $response = $this->doGet($url);
 
         return $response;

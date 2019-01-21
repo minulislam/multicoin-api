@@ -8,12 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WebhookController extends Controller
 {
-    /**
-     * Handle the Mandrill webhook and call
-     * method if available.
-     *
-     * @return Response
-     */
     public function handleWebHook(Request $request)
     {
         if ($this->validateSignature($request)) {
@@ -32,6 +26,7 @@ class WebhookController extends Controller
                     $this->{$method}
                     ($event);
                 }
+
             }
 
             return new Response;
@@ -64,7 +59,7 @@ class WebhookController extends Controller
     {
         $webhook_key = config('multicoin.webhook_token');
 
-        if (! empty($webhook_key)) {
+        if (!empty($webhook_key)) {
             $signature = $this->generateSignature($webhook_key, $request);
 
             return $request->header('X-Multicoin-Signature') === $signature;
@@ -81,8 +76,9 @@ class WebhookController extends Controller
     public function generateSignature($webhook_key, $request)
     {
         $timestamp = $request->header('timestamp');
-        $token = $request->header('token');
+        $token     = $request->header('token');
 
         return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
     }
+
 }

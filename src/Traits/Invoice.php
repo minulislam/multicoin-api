@@ -6,10 +6,7 @@ trait Invoice
 {
     public function createInvoice()
     {
-        /**
-         * [ GET api/v1/{coin}/receive ].
-         */
-        $url = $this->buildUrlParam('/receive');
+        $url      = $this->buildUrlParam('/receive');
         $response = $this->doGet($url);
 
         return $response;
@@ -17,10 +14,7 @@ trait Invoice
 
     public function unpaidInvoice()
     {
-        /**
-         * [ GET api/v1/{coin}/unpaid-invoices ].
-         */
-        $url = $this->buildUrlParam('/addr/'.'/unpaid-invoices');
+        $url      = $this->buildUrlParam('/unpaid-invoices');
         $response = $this->doGet($url);
 
         return $response;
@@ -28,10 +22,7 @@ trait Invoice
 
     public function paidInvoice()
     {
-        /**
-         * [ GET api/v1/{coin}/paid-invoices ].
-         */
-        $url = $this->buildUrlParam('/addr/'.'/unpaid-invoices');
+        $url      = $this->buildUrlParam('/paid-invoices');
         $response = $this->doGet($url);
 
         return $response;
