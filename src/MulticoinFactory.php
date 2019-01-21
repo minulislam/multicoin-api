@@ -82,7 +82,7 @@ class MulticoinFactory
     {
         if (!array_key_exists($name, $this->currencys)) {
             $config = $this->getConfig($name);
-
+            dump($config);
             $this->currencys[$name] = $this->make($config);
         }
 
