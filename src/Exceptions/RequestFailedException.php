@@ -41,7 +41,6 @@ class RequestFailedException extends ClientErrorException
         if ($requestOrResponse instanceof RequestInterface) {
             $this->httpRequest = $requestOrResponse;
         }
-
     }
 
     /**
@@ -59,5 +58,4 @@ class RequestFailedException extends ClientErrorException
     {
         return $this->httpResponse;
     }
-
 }
