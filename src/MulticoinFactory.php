@@ -61,9 +61,9 @@ class MulticoinFactory
      */
     public function getConfig(string $name = 'BTC'): array
     {
-        dd(array_key_exists($name, array_values($this->config['currency'])), $this->config, $this->config['currency']);
+        $flip_currency = array_flip($this->config['currency']);
 
-        if (!array_key_exists($name, array_values($this->config['currency']))) {
+        if (!array_key_exists($name, $flip_currency)) {
             throw new InvalidArgumentException(
                 "Could not find currency configuration [$name]"
             );
