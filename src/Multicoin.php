@@ -28,7 +28,7 @@ class Multicoin extends ApiClient
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        $this->coin   = $config['coin'];
+        $this->coin = $config['coin'];
         parent::__construct(
             $this->setUrl($this->config['url']),
             $this->setAuth($this->config['key'])
@@ -41,10 +41,10 @@ class Multicoin extends ApiClient
             $apiKey = config('multicoin.key');
         }
 
-        $authentication       = new Bearer($apiKey);
+        $authentication = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
-        $decoderPlugin        = new DecoderPlugin();
-        $headerSetPlugin      = new HeaderSetPlugin([
+        $decoderPlugin = new DecoderPlugin();
+        $headerSetPlugin = new HeaderSetPlugin([
 
             'Accept' => 'application/json',
         ]);
@@ -79,7 +79,7 @@ class Multicoin extends ApiClient
     {
         //$data = array_filter(array_merge($default, $param), 'strlen');
         $params = array_merge($default, $param);
+
         return http_build_query($params);
     }
-
 }

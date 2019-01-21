@@ -15,7 +15,7 @@ trait Address
 
     public function addressBalance($address)
     {
-        $url      = $this->buildUrl('/addr/'.$address.'/balance');
+        $url = $this->buildUrl('/addr/'.$address.'/balance');
         $response = $this->doGet($url);
 
         return $response;
@@ -23,7 +23,7 @@ trait Address
 
     public function address($address)
     {
-        $url      = $this->buildUrl('/addr/'.$address);
+        $url = $this->buildUrl('/addr/'.$address);
         $response = $this->doGet($url);
 
         return $response;
@@ -32,7 +32,7 @@ trait Address
     public function addressTxs($address, array $param = [])
     {
         $default = ['confirms' => 0];
-        $url     = $this->buildUrl('/addr/'.$address.'/txs');
+        $url = $this->buildUrl('/addr/'.$address.'/txs');
         $url .= '?'.$this->buildQueryParam($default, $param);
         $response = $this->doGet($url);
 
@@ -41,7 +41,7 @@ trait Address
 
     public function addressUtxo($address)
     {
-        $url      = $this->buildUrl('/addr/'.$address.'/utxo');
+        $url = $this->buildUrl('/addr/'.$address.'/utxo');
         $response = $this->doGet($url);
 
         return $response;
@@ -49,14 +49,15 @@ trait Address
 
     public function addressValidate($address)
     {
-        $url      = $this->buildUrl('/addr/'.$address.'/validate');
+        $url = $this->buildUrl('/addr/'.$address.'/validate');
         $response = $this->doGet($url);
 
         return $response;
     }
+
     public function transactionsFromDb($address)
     {
-        $url      = $this->buildUrl('/'.$address.'/txfromdb');
+        $url = $this->buildUrl('/'.$address.'/txfromdb');
         $response = $this->doGet($url);
 
         return $response;
@@ -64,7 +65,7 @@ trait Address
 
     public function transactionsFromApi($address)
     {
-        $url      = $this->buildUrl('/'.$address.'/txfromapi');
+        $url = $this->buildUrl('/'.$address.'/txfromapi');
         $response = $this->doGet($url);
 
         return $response;
