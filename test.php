@@ -11,8 +11,8 @@ $config = [
 
 ];
 $address = 'mpNxCePBFmyouh7oZ1kCuA1rLdFfVgxE9v';
-$txid    = 'afb9d5ce5adbea5fa0f5cac993ebf8f5806a0c2f9c9caf51eee0edccc75c29c8';
-$api     = new Multicoin($config);
+$txid = 'afb9d5ce5adbea5fa0f5cac993ebf8f5806a0c2f9c9caf51eee0edccc75c29c8';
+$api = new Multicoin($config);
 /*$traits = class_uses_recursive(Multicoin::class);
 d($traits);
 $classMethod = collect(get_class_methods($api));*/
@@ -23,7 +23,7 @@ $method = ['__construct', 'setAuth', 'setUrl', 'buildUrl', 'buildQueryParam',
     'addressValidate', 'transactionsFromDb', 'transactionsFromApi',
     'createInvoice', 'unpaidInvoice', 'paidInvoice', 'transaction', 'transactionValidate',
     'transactionConfirmations', 'coreBalance', 'balance', 'info',
-    'activeCurrencys', 'currency'];
+    'activeCurrencys', 'currency', ];
 
 $invoice = $api->createInvoice(['user_id' => 1]);
 d($invoice);
