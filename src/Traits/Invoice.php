@@ -13,8 +13,8 @@ trait Invoice
             'amount'   => 0.00,
             'address'  => '',
         ];
-        $data = array_merge($defaultParams, $params);
-        $data = array_filter($data);
+        //$data = array_merge($defaultParams, $params);
+        $data = array_values(array_filter(array_merge($defaultParams, $params)));
         $url  = $this->buildUrlParam('/receive');
         $url .= '?'.http_build_query($data);
         $response = $this->doGet($url);
