@@ -2,12 +2,12 @@
 
 namespace Multicoin\Api\Exceptions;
 
-use Exception;
 use Throwable;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Http\Client\Common\Exception\ClientErrorException;
 
-class RequestFailedException extends Exception
+class RequestFailedException extends ClientErrorException
 {
     /**
      * @var ResponseInterface
@@ -30,8 +30,9 @@ class RequestFailedException extends Exception
     {
         if ($requestOrResponse instanceof ResponseInterface) {
             parent::__construct(
-                'The HTTP request failed with the status code '.$requestOrResponse->getStatusCode(),
-                $code,
+                'The HTTP request Response failed with the status code '.$requestOrResponse->getStatusCode(),
+                $requestOrResponse->getRequest(),
+                $requestOrResponse->getReasponse(),
                 $previous
             );
             $this->httpResponse = $requestOrResponse;
@@ -41,7 +42,6 @@ class RequestFailedException extends Exception
             $this->httpRequest = $requestOrResponse;
         }
 
-        parent::__construct('The HTTP request failed unexpectedly.', $code, $previous);
     }
 
     /**
@@ -59,4 +59,5 @@ class RequestFailedException extends Exception
     {
         return $this->httpResponse;
     }
+
 }

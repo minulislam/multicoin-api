@@ -5,13 +5,13 @@ namespace Multicoin\Api\Service;
 use Http\Client\HttpClient;
 use Http\Message\UriFactory;
 use Http\Message\RequestFactory;
+use Illuminate\Support\Collection;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\Common\Plugin\BaseUriPlugin;
-use Multicoin\Api\Exceptions\RequestFailedException;
 use Http\Client\Common\Exception\ClientErrorException;
 
 class ApiClient
@@ -41,7 +41,7 @@ class ApiClient
         RequestFactory $requestFactory = null
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
-        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
+        $this->httpClient     = $httpClient ?: HttpClientDiscovery::find();
 
         $this->uriFactory = new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($baseUrl), ['replace' => $replace]);
         $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
@@ -52,7 +52,7 @@ class ApiClient
     public function addPlugins($plugin)
     {
         $this->plugins = array_merge($this->plugins, $plugin);
-        $this->client = $this->getHttpClient();
+        $this->client  = $this->getHttpClient();
 
         return $this;
     }
@@ -67,13 +67,20 @@ class ApiClient
         return new PluginClient($this->httpClient, $this->plugins);
     }
 
-    public function doGet(string $url):  ? array
+    public function doGet(string $url):  ? Collection
     {
         try {
-            $request = $this->client->get($url);
+            $request  = $this->client->get($url);
             $response = $request->getBody()->getContents();
-        } catch (ClientErrorException $exception) {
-            throw new RequestFailedException($exception);
+
+        } catch (ClientErrorException $e) {
+            throw new \Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
+            return collect([
+                'code'   => $e->getCode(),
+                'reason' => $e->getMessage(),
+            ]);
+
         }
 
         return $this->responseResult($response);
@@ -81,45 +88,17 @@ class ApiClient
 
     public function doPost(string $url, array $data = []) :  ? array
     {
-        $request = $this->client->post($url, $data);
+        $request  = $this->client->post($url, $data);
         $response = $request->getBody()->getContents();
 
         return $this->responseResult($response);
     }
 
-    protected function responseResult($response)
+    protected function responseResult( ? string $response) :  ? Collection
     {
         $data = json_decode($response, true);
 
         return collect($data);
     }
 
-    protected function checkForErrorsInResponse($response, $json)
-    {
-        $is_bad_status_code = ($response->status_code >= 400 && $response->status_code < 600);
-        $error_message = null;
-        $error_code = 1;
-
-        if ($json) {
-            // check for error
-            if (isset($json['error'])) {
-                $error_message = $json['error'];
-            } elseif (isset($json['errors'])) {
-                $error_message = isset($json['message']) ? $json['message'] : (is_array($json['errors']) ? implode(', ', $json['errors']) : $json['errors']);
-            }
-        }
-
-        if ($is_bad_status_code) {
-            if (null === $error_message) {
-                $error_message = "Received bad status code: {$response->status_code}";
-            }
-
-            $error_code = $response->status_code;
-        }
-
-        // for any errors, throw an exception
-        if (null !== $error_message) {
-            throw new APIException($error_message, $error_code);
-        }
-    }
 }
