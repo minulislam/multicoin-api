@@ -98,6 +98,10 @@ class ApiClient
     {
         $data = json_decode($response, true);
 
+        if (isset($data['error'])) {
+            throw new \Exception($data['error']['message']);
+        }
+
         return collect($data);
     }
 
