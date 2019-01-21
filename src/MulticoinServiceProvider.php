@@ -7,12 +7,6 @@ use Illuminate\Support\ServiceProvider;
 class MulticoinServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-    /**
      * Bootstrap the application services.
      */
     public function boot()
