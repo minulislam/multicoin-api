@@ -9,7 +9,7 @@ trait Address
         /**
          * [GET api/v1/{coin}/addr/new]
          */
-        $url      = $this->coin.'/addr/new';
+        $url      = '/addr/new';
         $response = $this->doGet($url);
         return $response;
     }
