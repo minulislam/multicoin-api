@@ -9,8 +9,8 @@ trait Invoice
         $default = [
             'user_id'  => '',
             'callback' => '',
-            'forward'  => 1,
-            'amount'   => 0.00,
+            'forward'  => '0',
+            'amount'   => '0.00',
             'address'  => '',
         ];
 
@@ -23,7 +23,7 @@ trait Invoice
 
     public function unpaidInvoice()
     {
-        $url = $this->buildUrl('/unpaid-invoices');
+        $url      = $this->buildUrl('/unpaid-invoices');
         $response = $this->doGet($url);
 
         return $response;
@@ -31,7 +31,7 @@ trait Invoice
 
     public function paidInvoice()
     {
-        $url = $this->buildUrl('/paid-invoices');
+        $url      = $this->buildUrl('/paid-invoices');
         $response = $this->doGet($url);
 
         return $response;
