@@ -41,7 +41,7 @@ class ApiClient
         RequestFactory $requestFactory = null
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
-        $this->httpClient     = $httpClient ?: HttpClientDiscovery::find();
+        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
 
         $this->uriFactory = new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($baseUrl), ['replace' => $replace]);
         $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
@@ -52,7 +52,7 @@ class ApiClient
     public function addPlugins($plugin)
     {
         $this->plugins = array_merge($this->plugins, $plugin);
-        $this->client  = $this->getHttpClient();
+        $this->client = $this->getHttpClient();
 
         return $this;
     }
@@ -70,17 +70,14 @@ class ApiClient
     public function doGet(string $url):  ? Collection
     {
         try {
-            $request  = $this->client->get($url);
+            $request = $this->client->get($url);
             $response = $request->getBody()->getContents();
-
         } catch (ClientErrorException $e) {
             throw new \Exception($e->getMessage()." Error Processing Request for [$url]", 1);
-
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
             ]);
-
         }
 
         return $this->responseResult($response);
@@ -88,13 +85,13 @@ class ApiClient
 
     public function doPost(string $url, array $data = []) :  ? array
     {
-        $request  = $this->client->post($url, $data);
+        $request = $this->client->post($url, $data);
         $response = $request->getBody()->getContents();
 
         return $this->responseResult($response);
     }
 
-    protected function responseResult( ? string $response) :  ? Collection
+    protected function responseResult(? string $response) :  ? Collection
     {
         $data = json_decode($response, true);
 
@@ -104,5 +101,4 @@ class ApiClient
 
         return collect($data);
     }
-
 }
