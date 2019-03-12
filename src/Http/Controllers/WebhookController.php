@@ -10,7 +10,7 @@ class WebhookController extends Controller
 {
     public function __construct()
     {
-        //  $this->middleware(VerifySignature::class);
+        $this->middleware(VerifySignature::class);
     }
 
     /*    public function __invoke(Request $request)
@@ -40,7 +40,7 @@ class WebhookController extends Controller
             dispatch(new $jobClass($ohDearWebhookCall));
         }
      */
-    public function handleWebHook(Request $request)
+    public function __invoke(Request $request)
     {
         if ($this->validateSignature($request)) {
             $events = $this->getJsonPayloadFromRequest($request);
