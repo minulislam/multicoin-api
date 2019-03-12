@@ -55,8 +55,7 @@ class WebhookController extends Controller
                 $method = 'handle'.studly_case(str_replace('.', '_', $eventName));
 
                 if (method_exists($this, $method)) {
-                    $this->{$method}
-                    ($event);
+                    $this->{$method}($event);
                 }
             }
 
