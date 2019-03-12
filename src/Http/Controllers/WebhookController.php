@@ -73,10 +73,11 @@ class WebhookController extends Controller
     public function generateSignature($webhook_key, $request)
     {
         $timestamp = $request->header('timestamp');
-        $token     = $request->header('token');
+        $token = $request->header('token');
 
         return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
     }
+
     protected function determineJobClass(string $type): string
     {
         return config("multicoin.jobs.{$type}", '');
