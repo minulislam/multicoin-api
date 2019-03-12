@@ -8,13 +8,45 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WebhookController extends Controller
 {
+    public function __construct()
+    {
+        //  $this->middleware(VerifySignature::class);
+    }
+
+    /*    public function __invoke(Request $request)
+        {
+            $eventPayload = json_decode($request->getContent(), true);
+
+            if (!isset($eventPayload['type'])) {
+                throw WebhookFailed::missingType($request);
+            }
+
+            $type = $eventPayload['type'];
+
+            $ohDearWebhookCall = new OhDearWebhookCall($eventPayload);
+
+            event("ohdear-webhooks::{$type}", $ohDearWebhookCall);
+
+            $jobClass = $this->determineJobClass($type);
+
+            if ('' === $jobClass) {
+                return;
+            }
+
+            if (!class_exists($jobClass)) {
+                throw WebhookFailed::jobClassDoesNotExist($jobClass, $ohDearWebhookCall);
+            }
+
+            dispatch(new $jobClass($ohDearWebhookCall));
+        }
+     */
     public function handleWebHook(Request $request)
     {
         if ($this->validateSignature($request)) {
             $events = $this->getJsonPayloadFromRequest($request);
 
             foreach ($events as $event) {
-                $eventName = isset($event['event']) ? $event['event'] : 'undefined';
+                $eventName = $event['event'] ?? 'undefined';
 
                 if ('undefined' == $eventName && isset($event['type'])) {
                     $eventName = $event['type'];
@@ -32,6 +64,23 @@ class WebhookController extends Controller
         }
 
         return new Response('Unauthorized', 401);
+    }
+
+    /**
+     * Generates a base64-encoded signature for webhook request.
+     * @param string $webhook_key the webhook's authentication key
+     * @param array  $request     the request's POST parameters
+     */
+    public function generateSignature($webhook_key, $request)
+    {
+        $timestamp = $request->header('timestamp');
+        $token     = $request->header('token');
+
+        return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
+    }
+    protected function determineJobClass(string $type): string
+    {
+        return config("multicoin.jobs.{$type}", '');
     }
 
     /**
@@ -65,18 +114,5 @@ class WebhookController extends Controller
         }
 
         return true;
-    }
-
-    /**
-     * Generates a base64-encoded signature for webhook request.
-     * @param string $webhook_key the webhook's authentication key
-     * @param array  $request     the request's POST parameters
-     */
-    public function generateSignature($webhook_key, $request)
-    {
-        $timestamp = $request->header('timestamp');
-        $token = $request->header('token');
-
-        return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
     }
 }

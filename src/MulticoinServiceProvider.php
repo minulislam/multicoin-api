@@ -57,9 +57,6 @@ class MulticoinServiceProvider extends ServiceProvider
         $this->app->singleton('multicoin', function ($app) {
             return new MulticoinFactory(config('multicoin'));
         });
-        /*  $this->app->singleton('blockbook', function ($app) {
-            return new BlockbookFactory(config('blockbook'), $app['log']);
-        });*/
     }
 
     /**
@@ -76,6 +73,9 @@ class MulticoinServiceProvider extends ServiceProvider
 
     private function registerRoutes()
     {
+        Route::macro('multicoinWebhook', function ($url) {
+            return Route::post($url, '\Multicoin\Api\Http\Controllers\WebhookController');
+        });
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
         });

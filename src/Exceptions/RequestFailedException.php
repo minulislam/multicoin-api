@@ -2,10 +2,10 @@
 
 namespace Multicoin\Api\Exceptions;
 
-use Throwable;
+use Http\Client\Common\Exception\ClientErrorException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\Common\Exception\ClientErrorException;
+use Throwable;
 
 class RequestFailedException extends ClientErrorException
 {

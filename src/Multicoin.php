@@ -2,19 +2,19 @@
 
 namespace Multicoin\Api;
 
-use Multicoin\Api\Traits\User;
-use Multicoin\Api\Traits\Address;
-use Multicoin\Api\Traits\Invoice;
-use Multicoin\Api\Traits\Currency;
-use Multicoin\Api\Service\ApiClient;
-use Multicoin\Api\Traits\Transaction;
-use Http\Message\Authentication\Bearer;
-use Http\Client\Common\Plugin\ErrorPlugin;
-use Http\Client\Common\Plugin\RetryPlugin;
+use Http\Client\Common\Plugin\AuthenticationPlugin;
 use Http\Client\Common\Plugin\DecoderPlugin;
+use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\Plugin\QueryDefaultsPlugin;
-use Http\Client\Common\Plugin\AuthenticationPlugin;
+use Http\Client\Common\Plugin\RetryPlugin;
+use Http\Message\Authentication\Bearer;
+use Multicoin\Api\Service\ApiClient;
+use Multicoin\Api\Traits\Address;
+use Multicoin\Api\Traits\Currency;
+use Multicoin\Api\Traits\Invoice;
+use Multicoin\Api\Traits\Transaction;
+use Multicoin\Api\Traits\User;
 
 class Multicoin extends ApiClient
 {
@@ -28,11 +28,11 @@ class Multicoin extends ApiClient
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        $this->coin = $config['coin'];
-        parent::__construct(
-            $this->setUrl($this->config['url']),
-            $this->setAuth($this->config['key'])
-        );
+        $this->coin   = $config['coin'];
+
+        $this->setUrl($this->config['url']);
+        $this->setAuth($this->config['key']);
+        parent::__construct();
     }
 
     public function setAuth($apiKey = null)
@@ -41,11 +41,10 @@ class Multicoin extends ApiClient
             $apiKey = config('multicoin.key');
         }
 
-        $authentication = new Bearer($apiKey);
+        $authentication       = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
-        $decoderPlugin = new DecoderPlugin();
-        $headerSetPlugin = new HeaderSetPlugin([
-
+        $decoderPlugin        = new DecoderPlugin();
+        $headerSetPlugin      = new HeaderSetPlugin([
             'Accept' => 'application/json',
         ]);
         $queryDefaultsPlugin = new QueryDefaultsPlugin([
