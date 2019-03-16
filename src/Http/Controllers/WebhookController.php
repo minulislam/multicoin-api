@@ -4,8 +4,8 @@ namespace Multicoin\Api\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Multicoin\Api\Exceptions\WebhookFailed;
+use Symfony\Component\HttpFoundation\Response;
 
 class WebhookController extends Controller
 {
@@ -15,31 +15,31 @@ class WebhookController extends Controller
     }
 
     public function __invoke(Request $request)
-        {
-            $eventPayload = json_decode($request->getContent(), true);
+    {
+        $eventPayload = json_decode($request->getContent(), true);
 
-            if (!isset($eventPayload['type'])) {
-                throw WebhookFailed::missingType($request);
-            }
-
-            $type = $eventPayload['type'];
-
-            $ohDearWebhookCall = new WebhookCall($eventPayload);
-
-            event("ohdear-webhooks::{$type}", $ohDearWebhookCall);
-
-            $jobClass = $this->determineJobClass($type);
-
-            if ('' === $jobClass) {
-                return;
-            }
-
-            if (!class_exists($jobClass)) {
-                throw WebhookFailed::jobClassDoesNotExist($jobClass, $ohDearWebhookCall);
-            }
-
-            dispatch(new $jobClass($ohDearWebhookCall));
+        if (! isset($eventPayload['type'])) {
+            throw WebhookFailed::missingType($request);
         }
+
+        $type = $eventPayload['type'];
+
+        $ohDearWebhookCall = new WebhookCall($eventPayload);
+
+        event("ohdear-webhooks::{$type}", $ohDearWebhookCall);
+
+        $jobClass = $this->determineJobClass($type);
+
+        if ('' === $jobClass) {
+            return;
+        }
+
+        if (! class_exists($jobClass)) {
+            throw WebhookFailed::jobClassDoesNotExist($jobClass, $ohDearWebhookCall);
+        }
+
+        dispatch(new $jobClass($ohDearWebhookCall));
+    }
 
     public function index(Request $request)
     {
@@ -74,10 +74,11 @@ class WebhookController extends Controller
     public function generateSignature($webhook_key, $request)
     {
         $timestamp = $request->header('timestamp');
-        $token     = $request->header('token');
+        $token = $request->header('token');
 
         return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
     }
+
     protected function determineJobClass(string $type): string
     {
         return config("multicoin.jobs.{$type}", '');
