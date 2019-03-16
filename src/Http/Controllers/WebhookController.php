@@ -5,6 +5,7 @@ namespace Multicoin\Api\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Multicoin\Api\Exceptions\WebhookFailed;
 
 class WebhookController extends Controller
 {
@@ -13,7 +14,7 @@ class WebhookController extends Controller
         $this->middleware(VerifySignature::class);
     }
 
-    /*    public function __invoke(Request $request)
+    public function __invoke(Request $request)
         {
             $eventPayload = json_decode($request->getContent(), true);
 
@@ -23,7 +24,7 @@ class WebhookController extends Controller
 
             $type = $eventPayload['type'];
 
-            $ohDearWebhookCall = new OhDearWebhookCall($eventPayload);
+            $ohDearWebhookCall = new WebhookCall($eventPayload);
 
             event("ohdear-webhooks::{$type}", $ohDearWebhookCall);
 
@@ -39,8 +40,8 @@ class WebhookController extends Controller
 
             dispatch(new $jobClass($ohDearWebhookCall));
         }
-     */
-    public function __invoke(Request $request)
+
+    public function index(Request $request)
     {
         if ($this->validateSignature($request)) {
             $events = $this->getJsonPayloadFromRequest($request);

@@ -3,7 +3,7 @@
 namespace Multicoin\Api\Http\Middlewares;
 
 use Closure;
-use OhDear\LaravelWebhooks\Exceptions\WebhookFailed;
+use Multicoin\Api\Exceptions\WebhookFailed;
 
 class VerifySignature
 {
