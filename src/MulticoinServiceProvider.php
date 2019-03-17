@@ -74,7 +74,7 @@ class MulticoinServiceProvider extends ServiceProvider
     private function registerRoutes()
     {
         Route::macro('multicoinWebhook', function ($url) {
-            return Route::post($url, '\Multicoin\Api\Http\Controllers\WebhookController');
+            return Route::any($url, '\Multicoin\Api\Http\Controllers\WebhookController');
         });
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
