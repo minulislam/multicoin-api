@@ -25,7 +25,7 @@ class VerifySignature
     protected function isValid(string $signature, $request): bool
     {
         $payload= $request->getContent();
-        $secret = config('multicoin.webhook_token');
+        $secret = config('multicoin.secret');
         if (empty($secret)) {
             throw WebhookFailed::signingSecretNotSet();
         }

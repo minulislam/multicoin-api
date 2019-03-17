@@ -13,13 +13,13 @@ class WebhookCall
     {
         return $this->payload['type'];
     }
-    public function dateTime(): string
+    public function transaction(): string
     {
-        return $this->payload['dateTime'];
+        return $this->payload['transaction'];
     }
-    public function site(): array
+    public function currency(): array
     {
-        return $this->payload['site'];
+        return $this->payload['currency'];
     }
     public function run(): array
     {
