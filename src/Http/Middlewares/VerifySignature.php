@@ -29,17 +29,12 @@ class VerifySignature
         if (empty($secret)) {
             throw WebhookFailed::signingSecretNotSet();
         }
-        $computedSignature = $this->generateSignature($secret, $request);
+        $timestamp = $request->header('timestamp');
+        $token     = $request->header('token');
+        $computedSignature = hash_hmac('sha256', $token.$timestamp, $secret);
         // $computedSignature = hash_hmac('sha256', $payload, $secret);
         return $signature===$computedSignature;
 
         return hash_equals($signature, $computedSignature);
-    }
-    protected function generateSignature($secret, $request)
-    {
-        $timestamp = $request->header('timestamp');
-        $token     = $request->header('token');
-
-        return  hash_hmac('sha256', $token.$timestamp, $secret);
     }
 }
