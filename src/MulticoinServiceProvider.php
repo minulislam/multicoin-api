@@ -77,6 +77,7 @@ class MulticoinServiceProvider extends ServiceProvider
             return Route::any($url, '\Multicoin\Api\Http\Controllers\WebhookController');
         });
     }
+
     private function registerPublishing()
     {
         if ($this->app->runningInConsole()) {
