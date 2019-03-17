@@ -2,6 +2,7 @@
 
 namespace Multicoin\Api\Service;
 
+use Exception;
 use Http\Client\HttpClient;
 use Http\Message\UriFactory;
 use Http\Message\RequestFactory;
@@ -13,7 +14,6 @@ use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Exception\ClientErrorException;
-use Exception;
 
 class ApiClient
 {
