@@ -15,7 +15,7 @@ return [
         'TBTC',
         'LTC',
     ],
-'jobs' => [
+    'jobs' => [
     'receive'=>'',
     'send'=>'',
         // 'uptimeCheckFailed' => \App\Jobs\LaravelWebhooks\HandleFailedUptimeCheck::class,

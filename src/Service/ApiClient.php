@@ -41,10 +41,8 @@ class ApiClient
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
-
         $this->uriFactory = new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($baseUrl), ['replace' => $replace]);
         $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
-
         $this->client = $this->getHttpClient();
     }
 

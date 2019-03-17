@@ -77,16 +77,6 @@ class MulticoinServiceProvider extends ServiceProvider
             return Route::any($url, '\Multicoin\Api\Http\Controllers\WebhookController');
         });
     }
-
-    private function routeConfiguration()
-    {
-        return [
-            'namespace'  => 'Multicoin\Api\Http\Controllers',
-            'prefix'     => config('multcoin.path'),
-            'middleware' => 'guest:api',
-        ];
-    }
-
     private function registerPublishing()
     {
         if ($this->app->runningInConsole()) {

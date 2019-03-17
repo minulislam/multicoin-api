@@ -29,10 +29,8 @@ class Multicoin extends ApiClient
     {
         $this->config = $config;
         $this->coin = $config['coin'];
-
-        $this->setUrl($this->config['url']);
         $this->setAuth($this->config['key']);
-        parent::__construct();
+        parent::__construct($this->config['url']);
     }
 
     public function setAuth($apiKey = null)
@@ -50,7 +48,6 @@ class Multicoin extends ApiClient
         $queryDefaultsPlugin = new QueryDefaultsPlugin([
             'currency' => 'btc',
         ]);
-
         return [
             $authenticationPlugin,
             $decoderPlugin,
