@@ -8,7 +8,7 @@ class WebhookFailed extends Exception
 {
     public static function missingSignature()
     {
-        return new static('The request did not contain a header named `OhDear-Signature`.');
+        return new static('The request did not contain a header named `multicoin-Signature`.');
     }
     public static function invalidSignature($signature)
     {

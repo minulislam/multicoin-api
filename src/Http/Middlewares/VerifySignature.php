@@ -40,6 +40,6 @@ class VerifySignature
         $timestamp = $request->header('timestamp');
         $token     = $request->header('token');
 
-        return base64_encode(hash_hmac('sha256', $token.$timestamp, $secret));
+        return  hash_hmac('sha256', $token.$timestamp, $secret);
     }
 }
