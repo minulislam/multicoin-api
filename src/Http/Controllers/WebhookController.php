@@ -17,11 +17,11 @@ class WebhookController extends Controller
     public function __invoke(Request $request)
     {
         $eventPayload = json_decode($request->getContent(), true);
-
+        logger('type', $eventPayload);
         if (!isset($eventPayload['type'])) {
             throw WebhookFailed::missingType($request);
         }
-        logger('type', $eventPayload);
+
         $type = $eventPayload['type'];
 
         $ohDearWebhookCall = new WebhookCall($eventPayload);
