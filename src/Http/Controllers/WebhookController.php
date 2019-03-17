@@ -21,7 +21,7 @@ class WebhookController extends Controller
         if (!isset($eventPayload['type'])) {
             throw WebhookFailed::missingType($request);
         }
-
+        logger('type', $eventPayload);
         $type = $eventPayload['type'];
 
         $ohDearWebhookCall = new WebhookCall($eventPayload);
