@@ -17,7 +17,7 @@ class WebhookController extends Controller
     public function __invoke(Request $request)
     {
         $eventPayload = json_decode($request->getContent(), true);
-        logger('type', $eventPayload);
+        dump($eventPayload);
         if (!isset($eventPayload['type'])) {
             throw WebhookFailed::missingType($request);
         }
