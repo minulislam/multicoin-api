@@ -13,6 +13,7 @@ use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Exception\ClientErrorException;
+use Exception;
 
 class ApiClient
 {
@@ -41,7 +42,10 @@ class ApiClient
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
-        $this->uriFactory = new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($baseUrl), ['replace' => $replace]);
+        $this->uriFactory = new BaseUriPlugin(
+            UriFactoryDiscovery::find()->createUri($baseUrl),
+            ['replace' => $replace]
+        );
         $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
         $this->client = $this->getHttpClient();
     }
@@ -70,7 +74,7 @@ class ApiClient
             $request = $this->client->get($url);
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
-            throw new \Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+            throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -93,7 +97,7 @@ class ApiClient
         $data = json_decode($response, true);
 
         if (isset($data['error'])) {
-            throw new \Exception($data['error']['message']);
+            throw new Exception($data['error']['message']);
         }
 
         return collect($data);
