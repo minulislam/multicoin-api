@@ -1,4 +1,5 @@
 <?php
+
 namespace Multicoin\Api\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class WebhookController extends Controller
     {
         $eventPayload = json_decode($request->getContent(), true);
 
-        if (!isset($eventPayload['type'])) {
+        if (! isset($eventPayload['type'])) {
             throw WebhookFailed::missingType($request);
         }
 
@@ -34,7 +35,7 @@ class WebhookController extends Controller
             return;
         }
 
-        if (!class_exists($jobClass)) {
+        if (! class_exists($jobClass)) {
             throw WebhookFailed::jobClassDoesNotExist($jobClass, $ohDearWebhookCall);
         }
 
@@ -74,10 +75,11 @@ class WebhookController extends Controller
     public function generateSignature($webhook_key, $request)
     {
         $timestamp = $request->header('timestamp');
-        $token     = $request->header('token');
+        $token = $request->header('token');
 
         return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
     }
+
     protected function determineJobClass(string $type): string
     {
         return config("multicoin.jobs.{$type}", '');
@@ -107,7 +109,7 @@ class WebhookController extends Controller
     {
         $webhook_key = config('multicoin.webhook_token');
 
-        if (!empty($webhook_key)) {
+        if (! empty($webhook_key)) {
             $signature = $this->generateSignature($webhook_key, $request);
 
             return $request->header('X-Multicoin-Signature') === $signature;
