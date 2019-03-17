@@ -24,21 +24,22 @@ class VerifySignature
 
     protected function isValid(string $signature, $request): bool
     {
-        $payload= $request->getContent();
+        $payload = $request->getContent();
         $secret = config('multicoin.webhook_token');
         if (empty($secret)) {
             throw WebhookFailed::signingSecretNotSet();
         }
         $computedSignature = $this->generateSignature($secret, $request);
         // $computedSignature = hash_hmac('sha256', $payload, $secret);
-        return $signature===$computedSignature;
+        return $signature === $computedSignature;
 
         return hash_equals($signature, $computedSignature);
     }
+
     protected function generateSignature($secret, $request)
     {
         $timestamp = $request->header('timestamp');
-        $token     = $request->header('token');
+        $token = $request->header('token');
 
         return  hash_hmac('sha256', $token.$timestamp, $secret);
     }
