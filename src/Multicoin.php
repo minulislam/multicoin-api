@@ -48,6 +48,7 @@ class Multicoin extends ApiClient
         $queryDefaultsPlugin = new QueryDefaultsPlugin([
             'currency' => 'btc',
         ]);
+
         return [
             $authenticationPlugin,
             $decoderPlugin,
