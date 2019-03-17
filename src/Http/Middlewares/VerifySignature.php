@@ -33,7 +33,7 @@ class VerifySignature
         $token     = $request->header('token');
         $computedSignature = hash_hmac('sha256', $token.$timestamp, $secret);
         // $computedSignature = hash_hmac('sha256', $payload, $secret);
-        return $signature===$computedSignature;
+        // return $signature===$computedSignature;
 
         return hash_equals($signature, $computedSignature);
     }
