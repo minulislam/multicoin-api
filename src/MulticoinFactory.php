@@ -33,14 +33,15 @@ class MulticoinFactory
     }
 
     /**
-     * Appends configuration array with default values.
+     * Pass methods onto the default currency.
      *
-     * @param  array   $config
-     * @return array
+     * @param  string  $method
+     * @param  array   $parameters
+     * @return mixed
      */
-    protected function withDefaults(array $config, string $name): array
+    public function __call(string $method, array $parameters)
     {
-        return array_merge(['coin' => $name], $config);
+        return $this->currency()->{$method}(...$parameters);
     }
 
     /**
@@ -91,15 +92,13 @@ class MulticoinFactory
     }
 
     /**
-     * Pass methods onto the default currency.
+     * Appends configuration array with default values.
      *
-     * @param  string  $method
-     * @param  array   $parameters
-     * @return mixed
+     * @param  array   $config
+     * @return array
      */
-    public function __call(string $method, array $parameters)
+    protected function withDefaults(array $config, string $name): array
     {
-        return $this->currency()->{$method}
-        (...$parameters);
+        return array_merge(['coin' => $name], $config);
     }
 }

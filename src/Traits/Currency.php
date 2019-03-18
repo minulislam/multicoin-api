@@ -7,7 +7,7 @@ trait Currency
     public function activeCurrencys()
     {
         $url = '/currency';
-        $response = $this->doGet($url);
+        $response = $this->client->doGet($url);
 
         return $response;
     }
@@ -15,7 +15,7 @@ trait Currency
     public function currency()
     {
         $url = $this->buildUrl('/index');
-        $response = $this->doGet($url);
+        $response = $this->client->doGet($url);
 
         return $response;
     }

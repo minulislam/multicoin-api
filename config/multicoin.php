@@ -2,7 +2,7 @@
 
 return [
     'key'             => 'DxjEMVbXapaRImw',
-    'webhook_token'   => 'DxjEMVbXapaRImw',
+    'secret'   => 'DxjEMVbXapaRImw',
     'url'             => 'http://apiendpoint',
     'path'            => 'multicoin',
     'currency_backup' => [
@@ -15,5 +15,11 @@ return [
         'TBTC',
         'LTC',
     ],
-
+    'jobs' => [
+    'receive'=>'',
+    'send'=>'',
+        // 'uptimeCheckFailed' => \App\Jobs\LaravelWebhooks\HandleFailedUptimeCheck::class,
+        // 'uptimeCheckRecovered' => \App\Jobs\LaravelWebhooks\HandleRecoveredUptimeCheck::class,
+        // ...
+    ],
 ];

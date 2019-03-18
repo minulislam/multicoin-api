@@ -2,6 +2,7 @@
 
 namespace Multicoin\Api\Service;
 
+use Exception;
 use Http\Client\HttpClient;
 use Http\Message\UriFactory;
 use Http\Message\RequestFactory;
@@ -17,16 +18,15 @@ use Http\Client\Common\Exception\ClientErrorException;
 class ApiClient
 {
     /**
-     * @var RequestFactory
-     */
-    private $requestFactory;
-
-    /**
      * @var HttpClient
      */
     protected $httpClient;
     protected $client;
     protected $plugins = [];
+    /**
+     * @var RequestFactory
+     */
+    private $requestFactory;
 
     /**
      * @var UriFactory
@@ -42,10 +42,11 @@ class ApiClient
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
-
-        $this->uriFactory = new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($baseUrl), ['replace' => $replace]);
+        $this->uriFactory = new BaseUriPlugin(
+            UriFactoryDiscovery::find()->createUri($baseUrl),
+            ['replace' => $replace]
+        );
         $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
-
         $this->client = $this->getHttpClient();
     }
 
@@ -67,13 +68,13 @@ class ApiClient
         return new PluginClient($this->httpClient, $this->plugins);
     }
 
-    public function doGet(string $url):  ? Collection
+    public function doGet(string $url):  ?Collection
     {
         try {
             $request = $this->client->get($url);
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
-            throw new \Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+            throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -83,7 +84,7 @@ class ApiClient
         return $this->responseResult($response);
     }
 
-    public function doPost(string $url, array $data = []) :  ? array
+    public function doPost(string $url, array $data = []) :  ?array
     {
         $request = $this->client->post($url, $data);
         $response = $request->getBody()->getContents();
@@ -91,12 +92,12 @@ class ApiClient
         return $this->responseResult($response);
     }
 
-    protected function responseResult(? string $response) :  ? Collection
+    protected function responseResult(?string $response) :  ?Collection
     {
         $data = json_decode($response, true);
 
         if (isset($data['error'])) {
-            throw new \Exception($data['error']['message']);
+            throw new Exception($data['error']['message']);
         }
 
         return collect($data);
