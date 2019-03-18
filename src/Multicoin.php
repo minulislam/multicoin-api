@@ -25,25 +25,27 @@ class Multicoin
 
     protected $config;
     protected $client;
+
     public function __construct(array $config = [], $client = null)
     {
         $this->config = $config;
         $this->coin = $config['coin'];
-        $this->client=$client?: $this->setClient();
+        $this->client = $client ?: $this->setClient();
         //   $this->setAuth($this->config['key']);
      //   parent::__construct($this->setUrl($this->config['url']));
     }
 
     public function setClient()
     {
-        $plugins=$this->setPlugins($this->config['key']);
-        $baseUrl=$this->setUrl($this->config['url']);
+        $plugins = $this->setPlugins($this->config['key']);
+        $baseUrl = $this->setUrl($this->config['url']);
+
         return new ApiClient($baseUrl, $plugins);
     }
 
     public function setPlugins($apiKey = null)
     {
-        $auth= $this->setAuth($apiKey);
+        $auth = $this->setAuth($apiKey);
         $decoderPlugin = new DecoderPlugin();
         $headerSetPlugin = new HeaderSetPlugin([
             'Accept' => 'application/json',
@@ -51,6 +53,7 @@ class Multicoin
         $queryDefaultsPlugin = new QueryDefaultsPlugin([
             'currency' => 'btc',
         ]);
+
         return [
             $auth,
             $decoderPlugin,
@@ -60,6 +63,7 @@ class Multicoin
             new ErrorPlugin(),
         ];
     }
+
     public function setAuth($apiKey = null)
     {
         if (null === $apiKey) {
@@ -68,6 +72,7 @@ class Multicoin
 
         $authentication = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
+
         return $authenticationPlugin;
 
         return [
