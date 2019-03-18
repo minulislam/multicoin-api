@@ -16,7 +16,7 @@ trait Invoice
 
         $url = $this->buildUrl('/receive');
         $url .= '?'.$this->buildQueryParam($default, $param);
-        $response = $this->doGet($url);
+        $response = $this->client->doGet($url);
 
         return $response;
     }
@@ -24,7 +24,7 @@ trait Invoice
     public function unpaidInvoice()
     {
         $url = $this->buildUrl('/unpaid-invoices');
-        $response = $this->doGet($url);
+        $response = $this->client->doGet($url);
 
         return $response;
     }
@@ -32,7 +32,7 @@ trait Invoice
     public function paidInvoice()
     {
         $url = $this->buildUrl('/paid-invoices');
-        $response = $this->doGet($url);
+        $response = $this->client->doGet($url);
 
         return $response;
     }

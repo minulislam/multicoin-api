@@ -16,18 +16,18 @@ class WebhookCall
         return $this->payload['type'];
     }
 
-    public function transaction(): string
+    public function transaction(): array
     {
         return $this->payload['transaction'];
     }
 
-    public function currency(): array
+    public function currency(): string
     {
         return $this->payload['currency'];
     }
 
-    public function run(): array
+    public function coin(): array
     {
-        return $this->payload['run'];
+        return $this->payload['coin'];
     }
 }

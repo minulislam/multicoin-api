@@ -16,7 +16,7 @@ use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\Plugin\QueryDefaultsPlugin;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
 
-class Multicoin extends ApiClient
+class Multicoin
 {
     use Address, Invoice, Transaction;
     use User, Currency;
@@ -24,15 +24,42 @@ class Multicoin extends ApiClient
     public $coin;
 
     protected $config;
-
-    public function __construct(array $config = [])
+    protected $client;
+    public function __construct(array $config = [], $client = null)
     {
         $this->config = $config;
         $this->coin = $config['coin'];
-        $this->setAuth($this->config['key']);
-        parent::__construct($this->config['url']);
+        $this->client=$client?: $this->setClient();
+        //   $this->setAuth($this->config['key']);
+     //   parent::__construct($this->setUrl($this->config['url']));
     }
 
+    public function setClient()
+    {
+        $plugins=$this->setPlugins($this->config['key']);
+        $baseUrl=$this->setUrl($this->config['url']);
+        return new ApiClient($baseUrl, $plugins);
+    }
+
+    public function setPlugins($apiKey = null)
+    {
+        $auth= $this->setAuth($apiKey);
+        $decoderPlugin = new DecoderPlugin();
+        $headerSetPlugin = new HeaderSetPlugin([
+            'Accept' => 'application/json',
+        ]);
+        $queryDefaultsPlugin = new QueryDefaultsPlugin([
+            'currency' => 'btc',
+        ]);
+        return [
+            $auth,
+            $decoderPlugin,
+            $headerSetPlugin,
+            $queryDefaultsPlugin,
+            new RetryPlugin(),
+            new ErrorPlugin(),
+        ];
+    }
     public function setAuth($apiKey = null)
     {
         if (null === $apiKey) {
@@ -41,20 +68,11 @@ class Multicoin extends ApiClient
 
         $authentication = new Bearer($apiKey);
         $authenticationPlugin = new AuthenticationPlugin($authentication);
-        $decoderPlugin = new DecoderPlugin();
-        $headerSetPlugin = new HeaderSetPlugin([
-            'Accept' => 'application/json',
-        ]);
-        $queryDefaultsPlugin = new QueryDefaultsPlugin([
-            'currency' => 'btc',
-        ]);
+        return $authenticationPlugin;
 
         return [
             $authenticationPlugin,
-            $decoderPlugin,
-            $headerSetPlugin,
-            new RetryPlugin(),
-            new ErrorPlugin(),
+
         ];
     }
 

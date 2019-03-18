@@ -41,8 +41,7 @@ class MulticoinFactory
      */
     public function __call(string $method, array $parameters)
     {
-        return $this->currency()->{$method}
-        (...$parameters);
+        return $this->currency()->{$method}(...$parameters);
     }
 
     /**
