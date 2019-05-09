@@ -24,9 +24,7 @@ class WebhookFailed extends Exception
 
     public static function missingType(Request $request)
     {
-
         return new static('The webhook call did not contain a type. Valid multicoin webhook calls should always contain a type.');
-
     }
 
     public function render($request)

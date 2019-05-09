@@ -21,7 +21,7 @@ class WebhookController extends Controller
 
         // $eventPayload = json_decode($request->getContent(), true);
         if (! isset($eventPayload['type'])) {
-            logger('eventPayload Type doesnt exist',$eventPayload );
+            logger('eventPayload Type doesnt exist', $eventPayload);
             throw WebhookFailed::missingType($request);
         }
 
