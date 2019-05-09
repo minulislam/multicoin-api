@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'key'             => 'DxjEMVbXapaRImw',
-    'secret'   => 'DxjEMVbXapaRImw',
+    'key'             => '',
+    'secret'   => '',
     'url'             => 'http://apiendpoint',
     'path'            => 'multicoin',
     'currency_backup' => [
