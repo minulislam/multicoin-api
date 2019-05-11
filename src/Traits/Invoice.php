@@ -21,17 +21,17 @@ trait Invoice
         return $response;
     }
 
-    public function unpaidInvoice()
+    public function paidInvoice()
     {
-        $url = $this->buildUrl('/unpaid-invoices');
+        $url = $this->buildUrl('/paid-invoices');
         $response = $this->client->doGet($url);
 
         return $response;
     }
 
-    public function paidInvoice()
+    public function unpaidInvoice()
     {
-        $url = $this->buildUrl('/paid-invoices');
+        $url = $this->buildUrl('/unpaid-invoices');
         $response = $this->client->doGet($url);
 
         return $response;

@@ -3,25 +3,25 @@
 namespace Multicoin\Api\Service;
 
 use Exception;
-use Http\Client\HttpClient;
-use Http\Message\UriFactory;
-use Http\Message\RequestFactory;
-use Illuminate\Support\Collection;
-use Http\Client\Common\PluginClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\UriFactoryDiscovery;
-use Http\Client\Common\HttpMethodsClient;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Exception\ClientErrorException;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Client\Common\Plugin\BaseUriPlugin;
+use Http\Client\Common\PluginClient;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\UriFactoryDiscovery;
+use Http\Message\RequestFactory;
+use Http\Message\UriFactory;
+use Illuminate\Support\Collection;
 
 class ApiClient
 {
+    protected $client;
     /**
      * @var HttpClient
      */
     protected $httpClient;
-    protected $client;
     protected $plugins = [];
     /**
      * @var RequestFactory
@@ -58,16 +58,6 @@ class ApiClient
         return $this;
     }
 
-    public function getHttpClient()
-    {
-        return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
-    }
-
-    public function getPluginClient()
-    {
-        return new PluginClient($this->httpClient, $this->plugins);
-    }
-
     public function doGet(string $url):  ?Collection
     {
         try {
@@ -75,6 +65,7 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -91,6 +82,7 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -98,6 +90,16 @@ class ApiClient
         }
 
         return $this->responseResult($response);
+    }
+
+    public function getHttpClient()
+    {
+        return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
+    }
+
+    public function getPluginClient()
+    {
+        return new PluginClient($this->httpClient, $this->plugins);
     }
 
     protected function responseResult(?string $response) :  ?Collection

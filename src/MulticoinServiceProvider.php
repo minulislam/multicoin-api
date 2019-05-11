@@ -48,18 +48,6 @@ class MulticoinServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register client factory.
-     *
-     * @return void
-     */
-    protected function registerFactory()
-    {
-        $this->app->singleton('multicoin', function ($app) {
-            return new MulticoinFactory(config('multicoin'));
-        });
-    }
-
-    /**
      * Register client shortcut.
      *
      * @return void
@@ -71,10 +59,15 @@ class MulticoinServiceProvider extends ServiceProvider
         });
     }
 
-    private function registerRoutes()
+    /**
+     * Register client factory.
+     *
+     * @return void
+     */
+    protected function registerFactory()
     {
-        Route::macro('multicoinWebhook', function ($url) {
-            return Route::any($url, '\Multicoin\Api\Http\Controllers\WebhookController');
+        $this->app->singleton('multicoin', function ($app) {
+            return new MulticoinFactory(config('multicoin'));
         });
     }
 
@@ -85,5 +78,12 @@ class MulticoinServiceProvider extends ServiceProvider
                 __DIR__.'/../config/multicoin.php' => config_path('multicoin.php'),
             ], 'config');
         }
+    }
+
+    private function registerRoutes()
+    {
+        Route::macro('multicoinWebhook', function ($url) {
+            return Route::any($url, '\Multicoin\Api\Http\Controllers\WebhookController');
+        });
     }
 }

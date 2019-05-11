@@ -9,25 +9,9 @@ class WebhookCall
     {
         $this->payload = $payload;
     }
-
-    public function type(): string
+    public function address(): string
     {
-        return $this->payload['type'];
-    }
-
-    public function transaction(): array
-    {
-        return $this->payload['transaction'];
-    }
-
-    public function currency(): string
-    {
-        return $this->payload['currency'];
-    }
-
-    public function coin(): string
-    {
-        return $this->payload['coin'];
+        return $this->payload['address_to'];
     }
     public function amount()
     {
@@ -37,21 +21,37 @@ class WebhookCall
     {
         return $this->payload['value'] / 100000000;
     }
-    public function address(): string
+
+    public function coin(): string
     {
-        return $this->payload['address_to'];
+        return $this->payload['coin'];
+    }
+
+    public function confirmations(): string
+    {
+        return $this->payload['confirmations'];
+    }
+
+    public function currency(): string
+    {
+        return $this->payload['currency'];
     }
     public function from(): string
     {
         return $this->payload['address_from'];
+    }
+
+    public function transaction(): array
+    {
+        return $this->payload['transaction'];
     }
     public function txid(): string
     {
         return $this->payload['txid'];
     }
 
-    public function confirmations(): string
+    public function type(): string
     {
-        return $this->payload['confirmations'];
+        return $this->payload['type'];
     }
 }

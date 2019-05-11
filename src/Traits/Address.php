@@ -4,10 +4,9 @@ namespace Multicoin\Api\Traits;
 
 trait Address
 {
-    public function addressNew()
+    public function address($address)
     {
-        $url = $this->buildUrl('/addr/new');
-
+        $url = $this->buildUrl('/addr/'.$address);
         $response = $this->client->doGet($url);
 
         return $response;
@@ -20,10 +19,10 @@ trait Address
 
         return $response;
     }
-
-    public function address($address)
+    public function addressNew()
     {
-        $url = $this->buildUrl('/addr/'.$address);
+        $url = $this->buildUrl('/addr/new');
+
         $response = $this->client->doGet($url);
 
         return $response;
@@ -55,17 +54,17 @@ trait Address
         return $response;
     }
 
-    public function transactionsFromDb($address)
+    public function transactionsFromApi($address)
     {
-        $url = $this->buildUrl('/'.$address.'/txfromdb');
+        $url = $this->buildUrl('/'.$address.'/txfromapi');
         $response = $this->client->doGet($url);
 
         return $response;
     }
 
-    public function transactionsFromApi($address)
+    public function transactionsFromDb($address)
     {
-        $url = $this->buildUrl('/'.$address.'/txfromapi');
+        $url = $this->buildUrl('/'.$address.'/txfromdb');
         $response = $this->client->doGet($url);
 
         return $response;
