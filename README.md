@@ -1,10 +1,9 @@
 # Very short description of the package
 
-
-[![Build Status](https://github.styleci.io/repos/166758762/shield?style=plastic)](https://travis-ci.org/spatie/:package_name)
- 
-
-
+[![StyleCI](https://github.styleci.io/repos/166758762/shield?branch=develop)](https://github.styleci.io/repos/166758762)
+ [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/minulislam/multicoin-api/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/minulislam/multicoin-api/?branch=develop)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/minulislam/multicoin-api/badges/code-intelligence.svg?b=develop)](https://scrutinizer-ci.com/code-intelligence)
+[![Build Status](https://scrutinizer-ci.com/g/minulislam/multicoin-api/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/minulislam/multicoin-api/build-status/develop)
 
  
 
