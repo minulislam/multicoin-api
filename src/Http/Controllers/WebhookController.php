@@ -18,38 +18,20 @@ class WebhookController extends Controller
     public function __invoke(Request $request)
     {
         $eventPayload = $this->getJsonPayloadFromRequest($request);
-
-        // $eventPayload = json_decode($request->getContent(), true);
         if (! isset($eventPayload['type'])) {
-            logger('eventPayload Type doesnt exist',$eventPayload );
             throw WebhookFailed::missingType($request);
         }
-
         $type = $eventPayload['type'];
-
         $WebhookCall = new WebhookCall($eventPayload);
-
         event("multicoin-webhooks::{$type}", $WebhookCall);
-
         $jobClass = $this->determineJobClass($type);
-
         if ('' === $jobClass) {
             return;
         }
-
         if (! class_exists($jobClass)) {
             throw WebhookFailed::jobClassDoesNotExist($jobClass, $WebhookCall);
         }
-
         dispatch(new $jobClass($WebhookCall));
-    }
-
-    public function generateSignature($webhook_key, $request)
-    {
-        $timestamp = $request->header('timestamp');
-        $token = $request->header('token');
-
-        return base64_encode(hash_hmac('sha256', $token.$timestamp, $webhook_key));
     }
 
     protected function determineJobClass(string $type)

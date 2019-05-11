@@ -35,7 +35,7 @@ $finder = Finder::create()
         */
 
 $config = PhpCsFixer\Config::create()
-    ->setRiskyAllowed(true)
+
     ->setRules([
        // '@PhpCsFixer'                                => true,
         '@PSR2'                                      => true,
@@ -88,7 +88,7 @@ $config = PhpCsFixer\Config::create()
                 'destruct', 'magic', 'phpunit', 'method_public', 'method_protected',
                 'method_private',
             ],
-           // 'sortAlgorithm' => 'alpha',
+          'sortAlgorithm' => 'alpha',
         ],
         'ordered_imports'                            => ['sortAlgorithm' => 'alpha'],
         'align_multiline_comment'                    => [

@@ -37,7 +37,7 @@ class Multicoin
 
     public function setClient()
     {
-        $plugins = $this->setPlugins($this->config['key']);
+        $plugins = $this->setPlugins($this->config['api_token']);
         $baseUrl = $this->setUrl($this->config['url']);
 
         return new ApiClient($baseUrl, $plugins);
@@ -67,7 +67,7 @@ class Multicoin
     public function setAuth($apiKey = null)
     {
         if (null === $apiKey) {
-            $apiKey = config('multicoin.key');
+            $apiKey = config('multicoin.api_token');
         }
 
         $authentication = new Bearer($apiKey);

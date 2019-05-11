@@ -1,25 +1,14 @@
 <?php
 
 return [
-    'key'             => '',
-    'secret'   => '',
-    'url'             => 'http://apiendpoint',
-    'path'            => 'multicoin',
-    'currency_backup' => [
-        'bitcoin'     => 'BTC',
-        'bitcoinTest' => 'TBTC',
-        'litecoin'    => 'LTC',
-    ],
-    'currency'        => [
-        'BTC',
-        'TBTC',
-        'LTC',
-    ],
-    'jobs' => [
-    'receive'=>'',
-    'send'=>'',
-        // 'uptimeCheckFailed' => \App\Jobs\LaravelWebhooks\HandleFailedUptimeCheck::class,
-        // 'uptimeCheckRecovered' => \App\Jobs\LaravelWebhooks\HandleRecoveredUptimeCheck::class,
-        // ...
+    'api_key'   => '',
+    'api_token' => '',
+    'url'       => 'http://apiendpoint',
+    'path'      => 'multicoin',
+    'currency'  => ['BTC', 'TBTC', 'LTC'],
+    'jobs'      => [
+        'receive' => '',
+        'send'    => '',
+
     ],
 ];
