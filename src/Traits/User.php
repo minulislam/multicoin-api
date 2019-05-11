@@ -4,17 +4,17 @@ namespace Multicoin\Api\Traits;
 
 trait User
 {
-    public function coreBalance()
+    public function balance()
     {
-        $url = '/user/core-balance';
+        $url = '/user/'.$this->coin.'/balance';
         $response = $this->client->doGet($url);
 
         return $response;
     }
 
-    public function balance()
+    public function coreBalance()
     {
-        $url = '/user/'.$this->coin.'/balance';
+        $url = '/user/core-balance';
         $response = $this->client->doGet($url);
 
         return $response;

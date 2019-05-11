@@ -10,14 +10,13 @@ use Http\Client\Common\Exception\ClientErrorException;
 class RequestFailedException extends ClientErrorException
 {
     /**
-     * @var ResponseInterface
-     */
-    protected $httpResponse;
-
-    /**
      * @var RequestInterface
      */
     protected $httpRequest;
+    /**
+     * @var ResponseInterface
+     */
+    protected $httpResponse;
 
     /**
      * HttpRequestFailedException constructor.

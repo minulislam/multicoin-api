@@ -5,3 +5,5 @@ docs
 vendor
 coverage
 test.php
+php_cs*
+.php_cs*

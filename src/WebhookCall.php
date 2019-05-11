@@ -11,14 +11,29 @@ class WebhookCall
         $this->payload = $payload;
     }
 
-    public function type(): string
+    public function address(): string
     {
-        return $this->payload['type'];
+        return $this->payload['address_to'];
     }
 
-    public function transaction(): array
+    public function amount()
     {
-        return $this->payload['transaction'];
+        return $this->payload['value'];
+    }
+
+    public function btc()
+    {
+        return $this->payload['value'] / 100000000;
+    }
+
+    public function coin(): string
+    {
+        return $this->payload['coin'];
+    }
+
+    public function confirmations(): string
+    {
+        return $this->payload['confirmations'];
     }
 
     public function currency(): string
@@ -26,8 +41,23 @@ class WebhookCall
         return $this->payload['currency'];
     }
 
-    public function coin(): array
+    public function from(): string
     {
-        return $this->payload['coin'];
+        return $this->payload['address_from'];
+    }
+
+    public function transaction(): array
+    {
+        return $this->payload['transaction'];
+    }
+
+    public function txid(): string
+    {
+        return $this->payload['txid'];
+    }
+
+    public function type(): string
+    {
+        return $this->payload['type'];
     }
 }

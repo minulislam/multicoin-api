@@ -12,17 +12,17 @@ trait Transaction
         return $response;
     }
 
-    public function transactionValidate($txid)
+    public function transactionConfirmations($txid)
     {
-        $url = $this->buildUrl('/tx/'.$txid.'/validate');
+        $url = $this->buildUrl('/tx/'.$txid.'/confirmations');
         $response = $this->client->doGet($url);
 
         return $response;
     }
 
-    public function transactionConfirmations($txid)
+    public function transactionValidate($txid)
     {
-        $url = $this->buildUrl('/tx/'.$txid.'/confirmations');
+        $url = $this->buildUrl('/tx/'.$txid.'/validate');
         $response = $this->client->doGet($url);
 
         return $response;

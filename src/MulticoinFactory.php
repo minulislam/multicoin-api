@@ -45,6 +45,23 @@ class MulticoinFactory
     }
 
     /**
+     * Gets currency instance by name or creates if not exists.
+     *
+     * @param  string                     $name
+     * @return \Multicoin\Api\Multicoin
+     */
+    public function currency(string $name = 'BTC'): Multicoincurrency
+    {
+        if (! array_key_exists($name, $this->currencys)) {
+            $config = $this->getConfig($name);
+
+            $this->currencys[$name] = $this->make($config);
+        }
+
+        return $this->currencys[$name];
+    }
+
+    /**
      * Gets currency config by name.
      *
      * @param  string  $name
@@ -61,23 +78,6 @@ class MulticoinFactory
         }
 
         return $this->withDefaults($this->config, $name);
-    }
-
-    /**
-     * Gets currency instance by name or creates if not exists.
-     *
-     * @param  string                     $name
-     * @return \Multicoin\Api\Multicoin
-     */
-    public function currency(string $name = 'BTC'): Multicoincurrency
-    {
-        if (! array_key_exists($name, $this->currencys)) {
-            $config = $this->getConfig($name);
-
-            $this->currencys[$name] = $this->make($config);
-        }
-
-        return $this->currencys[$name];
     }
 
     /**

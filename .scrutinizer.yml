@@ -6,6 +6,7 @@ build:
         override:
           - command: phpcs-run
             use_website_config: true
+          - command: php-scrutinizer-run
 
 
 filter:

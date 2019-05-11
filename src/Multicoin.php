@@ -22,9 +22,9 @@ class Multicoin
     use User, Currency;
 
     public $coin;
+    protected $client;
 
     protected $config;
-    protected $client;
 
     public function __construct(array $config = [], $client = null)
     {
@@ -35,9 +35,38 @@ class Multicoin
      //   parent::__construct($this->setUrl($this->config['url']));
     }
 
+    public function buildQueryParam(array $default, array $param = [])
+    {
+        //$data = array_filter(array_merge($default, $param), 'strlen');
+        $params = array_merge($default, $param);
+
+        return http_build_query($params);
+    }
+
+    public function buildUrl($url)
+    {
+        return '/'.trim($this->coin, '/').$url;
+    }
+
+    public function setAuth($apiKey = null)
+    {
+        if (null === $apiKey) {
+            $apiKey = config('multicoin.api_token');
+        }
+
+        $authentication = new Bearer($apiKey);
+        $authenticationPlugin = new AuthenticationPlugin($authentication);
+
+        return $authenticationPlugin;
+
+        return [
+            $authenticationPlugin,
+        ];
+    }
+
     public function setClient()
     {
-        $plugins = $this->setPlugins($this->config['key']);
+        $plugins = $this->setPlugins($this->config['api_token']);
         $baseUrl = $this->setUrl($this->config['url']);
 
         return new ApiClient($baseUrl, $plugins);
@@ -64,23 +93,6 @@ class Multicoin
         ];
     }
 
-    public function setAuth($apiKey = null)
-    {
-        if (null === $apiKey) {
-            $apiKey = config('multicoin.key');
-        }
-
-        $authentication = new Bearer($apiKey);
-        $authenticationPlugin = new AuthenticationPlugin($authentication);
-
-        return $authenticationPlugin;
-
-        return [
-            $authenticationPlugin,
-
-        ];
-    }
-
     public function setUrl($url = null)
     {
         if (null === $url) {
@@ -88,18 +100,5 @@ class Multicoin
         }
 
         return $url;
-    }
-
-    public function buildUrl($url)
-    {
-        return '/'.trim($this->coin, '/').$url;
-    }
-
-    public function buildQueryParam(array $default, array $param = [])
-    {
-        //$data = array_filter(array_merge($default, $param), 'strlen');
-        $params = array_merge($default, $param);
-
-        return http_build_query($params);
     }
 }
