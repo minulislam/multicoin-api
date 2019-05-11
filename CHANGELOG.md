@@ -2,7 +2,7 @@
 
 All notable changes to `multicoin-client` will be documented in this file
 
-## 1.0.0 - 201X-XX-XX
+## [1.0.0] - 201X-XX-XX
 
 - initial release
 <!-- changelog-linker -->
@@ -48,3 +48,4 @@ All notable changes to `multicoin-client` will be documented in this file
 [#1]: https://github.com/minulislam/multicoin-api/pull/1
 [@minulislam]: https://github.com/minulislam
 [#22]: https://github.com/minulislam/multicoin-api/pull/22
+[1.0.0]: https://github.com/minulislam/multicoin-api/compare/1.0.3...1.0.0
