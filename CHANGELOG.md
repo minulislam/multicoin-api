@@ -11,6 +11,14 @@ All notable changes to `multicoin-client` will be documented in this file
 
 ## Unreleased
 
+- [#27] Apply fixes from StyleCI, Thanks to [@minulislam]
+
+<!-- dumped content end -->
+
+<!-- dumped content start -->
+
+## Unreleased
+
 - [#22] Apply fixes from StyleCI, Thanks to [@minulislam]
 
 <!-- dumped content end -->
@@ -49,3 +57,4 @@ All notable changes to `multicoin-client` will be documented in this file
 [@minulislam]: https://github.com/minulislam
 [#22]: https://github.com/minulislam/multicoin-api/pull/22
 [1.0.0]: https://github.com/minulislam/multicoin-api/compare/1.0.3...1.0.0
+[#27]: https://github.com/minulislam/multicoin-api/pull/27
