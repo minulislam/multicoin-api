@@ -19,6 +19,7 @@ trait Address
 
         return $response;
     }
+
     public function addressNew()
     {
         $url = $this->buildUrl('/addr/new');

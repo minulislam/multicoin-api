@@ -3,17 +3,17 @@
 namespace Multicoin\Api\Service;
 
 use Exception;
-use Http\Client\Common\Exception\ClientErrorException;
-use Http\Client\Common\HttpMethodsClient;
-use Http\Client\Common\Plugin\BaseUriPlugin;
-use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Discovery\UriFactoryDiscovery;
-use Http\Message\RequestFactory;
 use Http\Message\UriFactory;
+use Http\Message\RequestFactory;
 use Illuminate\Support\Collection;
+use Http\Client\Common\PluginClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\UriFactoryDiscovery;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Client\Common\Plugin\BaseUriPlugin;
+use Http\Client\Common\Exception\ClientErrorException;
 
 class ApiClient
 {
@@ -65,7 +65,6 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
-
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -82,7 +81,6 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
-
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),

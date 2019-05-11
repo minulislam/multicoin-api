@@ -1,4 +1,5 @@
 <?php
+
 namespace Multicoin\Api;
 
 class WebhookCall
@@ -9,14 +10,17 @@ class WebhookCall
     {
         $this->payload = $payload;
     }
+
     public function address(): string
     {
         return $this->payload['address_to'];
     }
+
     public function amount()
     {
         return $this->payload['value'];
     }
+
     public function btc()
     {
         return $this->payload['value'] / 100000000;
@@ -36,6 +40,7 @@ class WebhookCall
     {
         return $this->payload['currency'];
     }
+
     public function from(): string
     {
         return $this->payload['address_from'];
@@ -45,6 +50,7 @@ class WebhookCall
     {
         return $this->payload['transaction'];
     }
+
     public function txid(): string
     {
         return $this->payload['txid'];

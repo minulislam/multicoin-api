@@ -11,6 +11,7 @@ class WebhookFailed extends Exception
     {
         return new static("The signature `{$signature}` found in the header named `X-Multicoin-Signature` is invalid. Make sure that the `multicoin.webhook_token` config key is set to the value you found on the multicoin account.");
     }
+
     public static function missingSignature()
     {
         return new static('The request did not contain a header named `multicoin-Signature`.');

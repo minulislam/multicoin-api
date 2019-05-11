@@ -11,6 +11,7 @@ trait User
 
         return $response;
     }
+
     public function coreBalance()
     {
         $url = '/user/core-balance';
