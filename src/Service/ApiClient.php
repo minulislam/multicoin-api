@@ -86,10 +86,10 @@ class ApiClient
 
     public function doPost(string $url, array $data = []):  ?Collection
     {
-          try {
-        $request = $this->client->post($url, $data);
-        $response = $request->getBody()->getContents();
-          } catch (ClientErrorException $e) {
+        try {
+            $request = $this->client->post($url, $data);
+            $response = $request->getBody()->getContents();
+        } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
             return collect([
                 'code'   => $e->getCode(),
