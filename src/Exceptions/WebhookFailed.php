@@ -9,12 +9,12 @@ class WebhookFailed extends Exception
 {
     public static function invalidSignature($signature)
     {
-        return new static("The signature `{$signature}` found in the header named `X-Multicoin-Signature` is invalid. Make sure that the `multicoin.webhook_token` config key is set to the value you found on the multicoin account.");
+        return new static("The signature `{$signature}` found in the header named `X-Multicoin-Signature` is invalid. Make sure that the `multicoin.api_key` config key is set to the value you found on the multicoin account.");
     }
 
     public static function missingSignature()
     {
-        return new static('The request did not contain a header named `multicoin-Signature`.');
+        return new static('The request did not contain a header named `X-Multicoin-Signature`.');
     }
 
     public static function missingType(Request $request)
@@ -29,6 +29,6 @@ class WebhookFailed extends Exception
 
     public static function signingSecretNotSet()
     {
-        return new static('The webhook signing secret is not set. Make sure that the `multicoin.webhook_token` config key is set to the value you found on the multicoin account.');
+        return new static('The webhook signing secret is not set. Make sure that the `multicoin.api_key` config key is set to the value you found on the multicoin account.');
     }
 }
