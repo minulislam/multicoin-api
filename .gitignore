@@ -7,3 +7,4 @@ coverage
 test.*
 php_cs*
 .php_cs*
+*.php
