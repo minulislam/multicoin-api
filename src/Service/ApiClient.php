@@ -65,6 +65,7 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -81,6 +82,7 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
