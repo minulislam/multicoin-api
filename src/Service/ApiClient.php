@@ -22,6 +22,7 @@ class ApiClient
      * @var HttpClient
      */
     protected $httpClient;
+
     protected $plugins = [];
     /**
      * @var RequestFactory
@@ -58,6 +59,16 @@ class ApiClient
         return $this;
     }
 
+    public function getHttpClient()
+    {
+        return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
+    }
+
+    public function getPluginClient()
+    {
+        return new PluginClient($this->httpClient, $this->plugins);
+    }
+
     public function doGet(string $url):  ?Collection
     {
         try {
@@ -65,6 +76,7 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -81,6 +93,7 @@ class ApiClient
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+
             return collect([
                 'code'   => $e->getCode(),
                 'reason' => $e->getMessage(),
@@ -90,17 +103,7 @@ class ApiClient
         return $this->responseResult($response);
     }
 
-    public function getHttpClient()
-    {
-        return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
-    }
-
-    public function getPluginClient()
-    {
-        return new PluginClient($this->httpClient, $this->plugins);
-    }
-
-    protected function responseResult(?string $response) :  ?Collection
+    protected function responseResult(?string $response) :? Collection
     {
         $data = json_decode($response, true);
 

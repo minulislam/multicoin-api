@@ -27,4 +27,12 @@ trait User
 
         return $response;
     }
+
+    public function setWebhookUrl($url)
+    {
+        $url = '/user/webhook';
+        $response = $this->client->doPost($url, ['url'=>$url]);
+
+        return $response;
+    }
 }
