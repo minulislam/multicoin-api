@@ -26,6 +26,7 @@
         "psr/http-message": "^1.0"
     },
     "require-dev": {
+        "larapack/dd": "^1.1",
         "matt-allan/laravel-code-style": "^0.3.0",
         "orchestra/testbench": "^3.7",
         "php-http/mock-client": "^1.2",
