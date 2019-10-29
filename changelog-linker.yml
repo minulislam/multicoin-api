@@ -1,3 +1,2 @@
 parameters:
     repository_url: 'https://github.com/minulislam/multicoin-api'
-    authors_to_ignore: ['minulislam']
