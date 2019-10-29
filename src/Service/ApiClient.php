@@ -35,10 +35,10 @@ class ApiClient
     private $uriFactory;
 
     public function __construct(
-        string         $baseUrl,
-        array          $plugins = [],
-        bool           $replace = true,
-        HttpClient     $httpClient = null,
+        string $baseUrl,
+        array $plugins = [],
+        bool $replace = true,
+        HttpClient $httpClient = null,
         RequestFactory $requestFactory = null
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
