@@ -1,5 +1,4 @@
-example
-example/*
+/example
 composer.lock
 docs
 vendor
