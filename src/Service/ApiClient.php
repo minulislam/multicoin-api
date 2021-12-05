@@ -75,6 +75,7 @@ class ApiClient
             $request = $this->client->get($url);
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $e) {
+
             throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
