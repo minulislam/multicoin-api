@@ -28,10 +28,18 @@ trait User
         return $response;
     }
 
-    public function setWebhookUrl($url)
+    public function setWebhookUrl($endPoint)
     {
         $url = '/user/webhook';
-        $response = $this->client->doPost($url, ['url'=>$url]);
+        $response = $this->client->doPost($url, ['url'=>$endPoint]);
+
+        return $response;
+    }
+        public function withdraw($address,$amount)
+    {
+
+           $url = '/user/'.$this->coin.'/withdraw';
+        $response = $this->client->doPost($url, ['address'=>$address,'amount'=>$amount]);
 
         return $response;
     }
