@@ -35,11 +35,12 @@ trait User
 
         return $response;
     }
-        public function withdraw($address,$amount)
+    public function withdraw(array $param = [])
     {
+        $url = $this->buildUrl('/withdraw');
+        $url .= '?'.http_build_query($param);
+        $response = $this->client->doGet($url);
 
-           $url = '/user/'.$this->coin.'/withdraw';
-        $response = $this->client->doPost($url, ['address'=>$address,'amount'=>$amount]);
 
         return $response;
     }
