@@ -6,7 +6,7 @@ if (! function_exists('multicoin')) {
      *
      * @return \Multicoin\Api\MulticoinFactory
      */
-    function multicoin(): MulticoinFactory
+    function multicoin()
     {
         return app('multicoin');
     }
