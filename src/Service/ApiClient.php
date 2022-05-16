@@ -14,6 +14,7 @@ use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Exception\ClientErrorException;
+use Multicoin\Api\Exceptions\RequestFailedException;
 
 class ApiClient
 {
@@ -69,43 +70,47 @@ class ApiClient
         return new PluginClient($this->httpClient, $this->plugins);
     }
 
-    public function doGet(string $url):  ?Collection
+    public function doGet(string $url): ?Collection
     {
         try {
             $request = $this->client->get($url);
             $response = $request->getBody()->getContents();
-        } catch (ClientErrorException $e) {
-
-            throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+        } catch (ClientErrorException $exception) {
+            //throw new RequestFailedException($exception);
+            throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
-                'code'   => $e->getCode(),
-                'reason' => $e->getMessage(),
+                    'error'=>[
+                'code'   => $exception->getCode(),
+                'reason' => $exception->getMessage(),
+            ]
             ]);
         }
 
         return $this->responseResult($response);
     }
 
-    public function doPost(string $url, array $data = []):  ?Collection
+    public function doPost(string $url, array $data = []): ?Collection
     {
         try {
             $request = $this->client->post($url, $data);
             $response = $request->getBody()->getContents();
-
-        } catch (ClientErrorException $e) {
-            throw new Exception($e->getMessage()." Error Processing Request for [$url]", 1);
+        } catch (ClientErrorException $exception) {
+            //throw new RequestFailedException($exception);
+            throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
-                'code'   => $e->getCode(),
-                'reason' => $e->getMessage(),
+                    'error'=>[
+                'code'   => $exception->getCode(),
+                'reason' => $exception->getMessage(),
+            ]
             ]);
         }
 
         return $this->responseResult($response);
     }
 
-    protected function responseResult(?string $response) :? Collection
+    protected function responseResult(?string $response): ?Collection
     {
         $data = json_decode($response, true);
 

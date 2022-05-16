@@ -7,8 +7,8 @@ use Multicoin\Api\Facade\Multicoin as MulticoinFacade;
 
 
 $config = [
-    'key'   => '955436d2-e91e-4ac1-b29b-d548950245',
-    'api_token' => '955e36d2-e8a2-4365-bc7c-40c2559f4364c',
+   // 'api_token'   => '',
+    'api_token' => '',
     'url'   => 'http://multicoin-backend.test/api/v1/',
     'coin'  => 'BTC',
 
@@ -17,10 +17,10 @@ $config = [
 
 $api     = new Multicoin($config);
 
-
+dump($api->currency());
+dd($api->fee());
 //$invoice = $api->createInvoice(['user_id' => 1]);
-//$invoice = $api->currencyQuote();
-$invoice = $api->withdraw(['address'=>'bc1qxmud50pt7h58eu9m2y9y9rhf90y3je70ldp6nn','amount'=>0.01]);
+
 
  dump($invoice);
 

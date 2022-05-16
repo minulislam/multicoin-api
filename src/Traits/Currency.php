@@ -19,7 +19,13 @@ trait Currency
 
         return $response;
     }
+    public function fee()
+    {
+        $url = $this->buildUrl('/fee');
+        $response = $this->client->doGet($url);
 
+        return $response;
+    }
     // binance
     // bitcoinaverage
     // Bitstamp

@@ -18,8 +18,11 @@ use Http\Client\Common\Plugin\AuthenticationPlugin;
 
 class Multicoin
 {
-    use Address, Invoice, Transaction;
-    use User, Currency;
+    use Address;
+    use Invoice;
+    use Transaction;
+    use User;
+    use Currency;
 
     public $coin;
     protected $client;
