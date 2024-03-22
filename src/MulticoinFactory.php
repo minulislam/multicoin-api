@@ -36,7 +36,7 @@ class MulticoinFactory
      * Pass methods onto the default currency.
      *
      * @param  string  $method
-     * @param  array   $parameters
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call(string $method, array $parameters)
@@ -47,7 +47,7 @@ class MulticoinFactory
     /**
      * Gets currency instance by name or creates if not exists.
      *
-     * @param  string                     $name
+     * @param  string  $name
      * @return \Multicoin\Api\Multicoin
      */
     public function currency(string $name = 'BTC'): Multicoincurrency
@@ -83,7 +83,7 @@ class MulticoinFactory
     /**
      * Creates currency instance.
      *
-     * @param  array                      $config
+     * @param  array  $config
      * @return \Multicoin\Api\Multicoin
      */
     public function make(array $config = []): Multicoincurrency
@@ -94,7 +94,7 @@ class MulticoinFactory
     /**
      * Appends configuration array with default values.
      *
-     * @param  array   $config
+     * @param  array  $config
      * @return array
      */
     protected function withDefaults(array $config, string $name): array

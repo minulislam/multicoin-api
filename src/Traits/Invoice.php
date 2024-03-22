@@ -7,11 +7,11 @@ trait Invoice
     public function createInvoice(array $param = [])
     {
         $default = [
-            'user_id'  => '',
+            'user_id' => '',
             'callback' => '',
-            'forward'  => '0',
-            'amount'   => '0.00',
-            'address'  => '',
+            'forward' => '0',
+            'amount' => '0.00',
+            'address' => '',
         ];
 
         $url = $this->buildUrl('/receive');

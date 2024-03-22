@@ -19,6 +19,7 @@ trait Currency
 
         return $response;
     }
+
     public function fee()
     {
         $url = $this->buildUrl('/fee');
@@ -26,6 +27,7 @@ trait Currency
 
         return $response;
     }
+
     // binance
     // bitcoinaverage
     // Bitstamp

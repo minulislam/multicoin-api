@@ -3,18 +3,17 @@
 namespace Multicoin\Api\Service;
 
 use Exception;
-use Http\Client\HttpClient;
-use Http\Message\UriFactory;
-use Http\Message\RequestFactory;
-use Illuminate\Support\Collection;
-use Http\Client\Common\PluginClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\UriFactoryDiscovery;
-use Http\Client\Common\HttpMethodsClient;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Exception\ClientErrorException;
-use Multicoin\Api\Exceptions\RequestFailedException;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Client\Common\Plugin\BaseUriPlugin;
+use Http\Client\Common\PluginClient;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\UriFactoryDiscovery;
+use Http\Message\RequestFactory;
+use Http\Message\UriFactory;
+use Illuminate\Support\Collection;
 
 class ApiClient
 {
@@ -36,10 +35,10 @@ class ApiClient
     private $uriFactory;
 
     public function __construct(
-        string         $baseUrl,
-        array          $plugins = [],
-        bool           $replace = true,
-        HttpClient     $httpClient = null,
+        string $baseUrl,
+        array $plugins = [],
+        bool $replace = true,
+        HttpClient $httpClient = null,
         RequestFactory $requestFactory = null
     ) {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
@@ -80,10 +79,10 @@ class ApiClient
             throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
-                    'error'=>[
-                'code'   => $exception->getCode(),
-                'reason' => $exception->getMessage(),
-                    ]
+                'error' => [
+                    'code' => $exception->getCode(),
+                    'reason' => $exception->getMessage(),
+                ],
             ]);
         }
 
@@ -100,10 +99,10 @@ class ApiClient
             // throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
-                    'error'=>[
-                'code'   => $exception->getCode(),
-                'reason' => $exception->getMessage(),
-                    ]
+                'error' => [
+                    'code' => $exception->getCode(),
+                    'reason' => $exception->getMessage(),
+                ],
             ]);
         }
 

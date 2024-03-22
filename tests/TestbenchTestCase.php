@@ -20,6 +20,7 @@ abstract class TestbenchTestCase extends Testbench
 
     /**
      * Tear down after each test.
+     *
      * @return void
      */
     public function tearDown()
@@ -29,6 +30,7 @@ abstract class TestbenchTestCase extends Testbench
 
     /**
      * Tell Testbench to use this package.
+     *
      * @param  $app
      * @return array
      */

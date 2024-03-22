@@ -3,10 +3,10 @@
 namespace Multicoin\Api\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Multicoin\Api\WebhookCall;
 use Illuminate\Routing\Controller;
 use Multicoin\Api\Exceptions\WebhookFailed;
 use Multicoin\Api\Http\Middlewares\VerifySignature;
+use Multicoin\Api\WebhookCall;
 
 class WebhookController extends Controller
 {
