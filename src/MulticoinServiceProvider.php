@@ -36,7 +36,7 @@ class MulticoinServiceProvider extends ServiceProvider
     protected function registerAliases()
     {
         $aliases = [
-            'multicoin'          => 'Multicoin\Api\multicoinFactory',
+            'multicoin' => 'Multicoin\Api\multicoinFactory',
             'multicoin.currency' => 'Multicoin\Api\multicoin',
         ];
 
