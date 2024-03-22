@@ -76,14 +76,14 @@ class ApiClient
             $request = $this->client->get($url);
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $exception) {
-            //throw new RequestFailedException($exception);
+            throw new \Exception($exception);
             throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
                     'error'=>[
                 'code'   => $exception->getCode(),
                 'reason' => $exception->getMessage(),
-            ]
+                    ]
             ]);
         }
 
@@ -96,14 +96,14 @@ class ApiClient
             $request = $this->client->post($url, $data);
             $response = $request->getBody()->getContents();
         } catch (ClientErrorException $exception) {
-            //throw new RequestFailedException($exception);
-            throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
+            throw new \Exception($exception);
+            // throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
 
             return collect([
                     'error'=>[
                 'code'   => $exception->getCode(),
                 'reason' => $exception->getMessage(),
-            ]
+                    ]
             ]);
         }
 
