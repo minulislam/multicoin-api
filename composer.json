@@ -20,6 +20,7 @@
         "php-http/client-implementation": "^1.0",
         "php-http/discovery": "^1.19",
         "php-http/message-factory": "^1.1",
+        "psr/http-factory": "^1.1",
         "symfony/http-client": "^5.4 || ^7.0"
     },
     "require-dev": {
