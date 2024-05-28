@@ -2,10 +2,10 @@
 
 namespace Multicoin\Api\Exceptions;
 
-use Throwable;
+use Http\Client\Common\Exception\ClientErrorException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\Common\Exception\ClientErrorException;
+use Throwable;
 
 class RequestFailedException extends ClientErrorException
 {
@@ -21,9 +21,9 @@ class RequestFailedException extends ClientErrorException
     /**
      * HttpRequestFailedException constructor.
      *
-     * @param RequestInterface|ResponseInterface $requestOrResponse
-     * @param int                                $code
-     * @param null|Throwable                     $previous
+     * @param  RequestInterface|ResponseInterface  $requestOrResponse
+     * @param  int  $code
+     * @param  null|Throwable  $previous
      */
     public function __construct($requestOrResponse, int $code = 0, Throwable $previous = null)
     {

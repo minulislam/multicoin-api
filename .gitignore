@@ -1,9 +1,9 @@
-build
 example
+/example
 composer.lock
 docs
 vendor
 coverage
-test.php
+test.*
 php_cs*
 .php_cs*

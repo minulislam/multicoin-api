@@ -47,6 +47,14 @@ trait Address
         return $response;
     }
 
+    public function addressUnconfirmed($address)
+    {
+        $url = $this->buildUrl('/addr/'.$address.'/unconfirmed');
+        $response = $this->client->doGet($url);
+
+        return $response;
+    }
+
     public function addressValidate($address)
     {
         $url = $this->buildUrl('/addr/'.$address.'/validate');
