@@ -28,17 +28,5 @@ trait Currency
         return $response;
     }
 
-    // binance
-    // bitcoinaverage
-    // Bitstamp
-    // Bittrex
-    // CoinMarketCap
-    // Poloniex
-    public function currencyQuote($provider = null, $coin = null)
-    {
-        $client = new \Tokenly\CryptoQuoteClient\Client();
-        $quote = $client->getQuote($provider ?? 'binance', 'USD', $coin ?? $this->coin);
 
-        return collect($quote);
-    }
 }
