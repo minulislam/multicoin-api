@@ -27,6 +27,4 @@ trait Currency
 
         return $response;
     }
-
-
 }
