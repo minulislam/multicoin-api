@@ -55,9 +55,9 @@
         "fixer": "php-cs-fixer fix"
     },
     "config": {
-            "preferred-install": "dist",
-    "sort-packages": true,
-    "optimize-autoloader": true
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
     },
     "extra": {
         "laravel": {
