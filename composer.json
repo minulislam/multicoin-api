@@ -13,10 +13,10 @@
         }
     ],
     "require": {
-        "php": "^7.1||^8.0",
-        "guzzlehttp/promises": "^2.0",
+        "php": "^7.1",
+        "guzzlehttp/promises": "^1.4|^2.0",
         "http-interop/http-factory-guzzle": "^1.1",
-        "illuminate/support": "^5.5|^6|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "illuminate/support": "^5.5|^6|^7.0",
         "php-http/async-client-implementation": "^1.0",
         "php-http/client-implementation": "^1.0",
         "php-http/discovery": "^1.0",
@@ -54,10 +54,7 @@
     "config": {
             "preferred-install": "dist",
     "sort-packages": true,
-    "optimize-autoloader": true,
-        "allow-plugins": {
-            "php-http/discovery": true
-        }
+    "optimize-autoloader": true
     },
     "extra": {
         "laravel": {
