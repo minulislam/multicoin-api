@@ -36,17 +36,17 @@ class MulticoinServiceProvider extends ServiceProvider
     protected function registerAliases()
     {
         $aliases = [
-            'multicoin' => 'Multicoin\Api\multicoinFactory',
-            'multicoin.currency' => 'Multicoin\Api\multicoin',
+            'multicoin' => \Multicoin\Api\MulticoinFactory::class,
+            'multicoin.currency' => \Multicoin\Api\Multicoin::class,
         ];
 
-        foreach ($aliases as $key => $aliases) {
-            foreach ((array) $aliases as $alias) {
+        foreach ($aliases as $key => $targets) {
+            foreach ((array) $targets as $alias) {
                 $this->app->alias($key, $alias);
             }
         }
     }
-
+    // ... existing code ...
     /**
      * Register client shortcut.
      *
@@ -83,7 +83,7 @@ class MulticoinServiceProvider extends ServiceProvider
     private function registerRoutes()
     {
         Route::macro('multicoinWebhook', function ($url) {
-            return Route::any($url, '\Multicoin\Api\Http\Controllers\WebhookController');
+            return Route::post($url, \Multicoin\Api\Http\Controllers\WebhookController::class);
         });
     }
 }

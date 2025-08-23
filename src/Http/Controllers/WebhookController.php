@@ -26,7 +26,7 @@ class WebhookController extends Controller
         event("multicoin-webhooks::{$type}", $WebhookCall);
         $jobClass = $this->determineJobClass($type);
         if ('' === $jobClass) {
-            return;
+            return response()->noContent();
         }
         if (! class_exists($jobClass)) {
             throw WebhookFailed::jobClassDoesNotExist($jobClass, $WebhookCall);

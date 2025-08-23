@@ -15,6 +15,7 @@ use Multicoin\Api\Traits\Currency;
 use Multicoin\Api\Traits\Invoice;
 use Multicoin\Api\Traits\Transaction;
 use Multicoin\Api\Traits\User;
+use InvalidArgumentException;
 
 class Multicoin
 {
@@ -61,14 +62,18 @@ class Multicoin
         $authenticationPlugin = new AuthenticationPlugin($authentication);
 
         return $authenticationPlugin;
-
-        return [
-            $authenticationPlugin,
-        ];
     }
 
     public function setClient()
     {
+        // Basic validation for required keys before creating the ApiClient
+        if (empty($this->config['api_token']) || ! is_string($this->config['api_token'])) {
+            throw new InvalidArgumentException('Invalid configuration: "api_token" is missing or empty.');
+        }
+        if (empty($this->config['url']) || ! is_string($this->config['url'])) {
+            throw new InvalidArgumentException('Invalid configuration: "url" is missing or empty.');
+        }
+
         $plugins = $this->setPlugins($this->config['api_token']);
         $baseUrl = $this->setUrl($this->config['url']);
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace Multicoin\Api\Service;
 
 use Exception;
@@ -12,7 +11,6 @@ use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
 use Http\Message\RequestFactory;
-use Http\Message\UriFactory;
 use Illuminate\Support\Collection;
 
 class ApiClient
@@ -30,93 +28,94 @@ class ApiClient
     private $requestFactory;
 
     /**
-     * @var UriFactory
+     * Holds the base URI plugin instance.
+     *
+     * @var BaseUriPlugin
      */
-    private $uriFactory;
+    private $baseUriPlugin;
 
     public function __construct(
-        string $baseUrl,
-        array $plugins = [],
-        bool $replace = true,
-        HttpClient $httpClient = null,
-        RequestFactory $requestFactory = null
-    ) {
+        string          $baseUrl,
+        array           $plugins = [],
+        bool            $replace = true,
+        ?HttpClient     $httpClient = null,
+        ?RequestFactory $requestFactory = null
+    )
+    {
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
-        $this->uriFactory = new BaseUriPlugin(
+        $this->baseUriPlugin = new BaseUriPlugin(
             UriFactoryDiscovery::find()->createUri($baseUrl),
             ['replace' => $replace]
         );
-        $this->addPlugins(array_merge($plugins, [$this->uriFactory]));
+        $this->addPlugins(array_merge($plugins, [$this->baseUriPlugin]));
         $this->client = $this->getHttpClient();
     }
 
-    public function addPlugins($plugin)
+    public function addPlugins(array $plugins): self
     {
-        $this->plugins = array_merge($this->plugins, $plugin);
+        $this->plugins = array_merge($this->plugins, $plugins);
         $this->client = $this->getHttpClient();
 
         return $this;
     }
 
-    public function getHttpClient()
+    public function getHttpClient(): HttpMethodsClient
     {
         return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
     }
 
-    public function getPluginClient()
+    public function getPluginClient(): PluginClient
     {
         return new PluginClient($this->httpClient, $this->plugins);
     }
 
-    public function doGet(string $url): ?Collection
+    public function doGet(string $url): Collection
     {
-        try {
-            $request = $this->client->get($url);
-            $response = $request->getBody()->getContents();
-        } catch (ClientErrorException $exception) {
-            throw new \Exception($exception);
-            throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
-
-            return collect([
-                'error' => [
-                    'code' => $exception->getCode(),
-                    'reason' => $exception->getMessage(),
-                ],
-            ]);
-        }
-
-        return $this->responseResult($response);
+        return $this->executeRequest('get', $url);
+    }
+    // ... existing code ...
+    public function doPost(string $url, array $data = []): Collection
+    {
+        // Note: $data is passed as headers as per original behavior.
+        return $this->executeRequest('post', $url, $data);
     }
 
-    public function doPost(string $url, array $data = []): ?Collection
+    /**
+     * Executes an HTTP request and returns parsed JSON as a Laravel Collection.
+     *
+     * @param string $method get|post|put|delete...
+     * @param string $url
+     * @param array  $data
+     *
+     * @return Collection
+     *
+     * @throws Exception
+     */
+    private function executeRequest(string $method, string $url, array $data = []): Collection
     {
         try {
-            $request = $this->client->post($url, $data);
-            $response = $request->getBody()->getContents();
+            // HttpMethodsClient has dynamic methods for verbs.
+            $response = $this->client->{$method}($url, $data)->getBody()->getContents();
         } catch (ClientErrorException $exception) {
-            throw new \Exception($exception);
-            // throw new Exception($exception->getMessage()." Error Processing Request for [$url]", 1);
-
-            return collect([
-                'error' => [
-                    'code' => $exception->getCode(),
-                    'reason' => $exception->getMessage(),
-                ],
-            ]);
+            throw new Exception(
+                sprintf('HTTP client error during %s %s: %s', strtoupper($method), $url, $exception->getMessage()),
+                (int) $exception->getCode(),
+                $exception
+            );
         }
 
-        return $this->responseResult($response);
+        return $this->parseJson($response);
     }
 
-    protected function responseResult(?string $response): ?Collection
+    protected function parseJson(string $response): Collection
     {
         $data = json_decode($response, true);
 
-        if (isset($data['error'])) {
-            throw new Exception($data['error']['message']);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new Exception('Invalid JSON response: ' . json_last_error_msg());
         }
 
-        return collect($data);
+        return new Collection($data ?? []);
     }
 }

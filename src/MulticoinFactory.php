@@ -3,7 +3,7 @@
 namespace Multicoin\Api;
 
 use InvalidArgumentException;
-use Multicoin\Api\Multicoin as Multicoincurrency;
+use Multicoin\Api\Multicoin;
 
 class MulticoinFactory
 {
@@ -19,7 +19,7 @@ class MulticoinFactory
      *
      * @var array
      */
-    protected $currencys = [];
+    protected $currencies = [];
 
     /**
      * Constructs currency factory instance.
@@ -50,15 +50,15 @@ class MulticoinFactory
      * @param  string  $name
      * @return \Multicoin\Api\Multicoin
      */
-    public function currency(string $name = 'BTC'): Multicoincurrency
+    public function currency(string $name = 'BTC'): Multicoin
     {
-        if (! array_key_exists($name, $this->currencys)) {
+        if (! array_key_exists($name, $this->currencies)) {
             $config = $this->getConfig($name);
 
-            $this->currencys[$name] = $this->make($config);
+            $this->currencies[$name] = $this->make($config);
         }
 
-        return $this->currencys[$name];
+        return $this->currencies[$name];
     }
 
     /**
@@ -69,6 +69,17 @@ class MulticoinFactory
      */
     public function getConfig(string $name = 'BTC'): array
     {
+        // Basic validation for the expected config shape
+        if (! isset($this->config['currency']) || ! is_array($this->config['currency'])) {
+            throw new InvalidArgumentException('Invalid configuration: "currency" list is missing or not an array.');
+        }
+        if (empty($this->config['url']) || ! is_string($this->config['url'])) {
+            throw new InvalidArgumentException('Invalid configuration: "url" is missing or empty.');
+        }
+        if (empty($this->config['api_token']) || ! is_string($this->config['api_token'])) {
+            throw new InvalidArgumentException('Invalid configuration: "api_token" is missing or empty.');
+        }
+
         $flip_currency = array_flip($this->config['currency']);
 
         if (! array_key_exists($name, $flip_currency)) {
@@ -86,9 +97,9 @@ class MulticoinFactory
      * @param  array  $config
      * @return \Multicoin\Api\Multicoin
      */
-    public function make(array $config = []): Multicoincurrency
+    public function make(array $config = []): Multicoin
     {
-        return new Multicoincurrency($config);
+        return new Multicoin($config);
     }
 
     /**
