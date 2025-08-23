@@ -12,6 +12,7 @@ trait Invoice
             'forward' => '0',
             'amount' => '0.00',
             'address' => '',
+
         ];
 
         $url = $this->buildUrl('/receive');
