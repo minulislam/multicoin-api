@@ -1,4 +1,5 @@
 <?php
+
 namespace Multicoin\Api\Service;
 
 use Exception;
@@ -40,17 +41,16 @@ class ApiClient
     private $baseUriPlugin;
 
     public function __construct(
-        string                 $baseUrl,
-        array                  $plugins = [],
-        bool                   $replace = true,
-        ?HttpClient            $httpClient = null,
+        string $baseUrl,
+        array $plugins = [],
+        bool $replace = true,
+        ?HttpClient $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null
-    )
-    {
+    ) {
         $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
-        $this->streamFactory  = Psr17FactoryDiscovery::findStreamFactory();
-        $this->httpClient     = $httpClient ?: HttpClientDiscovery::find();
-        $this->baseUriPlugin  = new BaseUriPlugin(
+        $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
+        $this->baseUriPlugin = new BaseUriPlugin(
             Psr17FactoryDiscovery::findUriFactory()->createUri($baseUrl),
             ['replace' => $replace]
         );
@@ -80,6 +80,7 @@ class ApiClient
     {
         return $this->executeRequest('get', $url);
     }
+
     // ... existing code ...
     public function doPost(string $url, array $data = []): Collection
     {
@@ -90,10 +91,9 @@ class ApiClient
     /**
      * Executes an HTTP request and returns parsed JSON as a Laravel Collection.
      *
-     * @param string $method get|post|put|delete...
-     * @param string $url
-     * @param array  $data
-     *
+     * @param  string  $method  get|post|put|delete...
+     * @param  string  $url
+     * @param  array  $data
      * @return Collection
      *
      * @throws Exception
@@ -119,12 +119,12 @@ class ApiClient
         $data = json_decode($response, true);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception('Invalid JSON response: ' . json_last_error_msg());
+            throw new Exception('Invalid JSON response: '.json_last_error_msg());
         }
 
         return new Collection($data ?? []);
+
         // Return a plain array to avoid JSON-serializing Illuminate\Support\Collection on PHP 8.1
         return is_array($data) ? $data : [];
-
     }
 }
