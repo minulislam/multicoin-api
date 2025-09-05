@@ -8,10 +8,11 @@ use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Discovery\UriFactoryDiscovery;
-use Http\Message\RequestFactory;
+// ... existing code ...
+use Http\Discovery\Psr17FactoryDiscovery;
 use Illuminate\Support\Collection;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class ApiClient
 {
@@ -23,9 +24,13 @@ class ApiClient
 
     protected $plugins = [];
     /**
-     * @var RequestFactory
+     * @var RequestFactoryInterface
      */
     private $requestFactory;
+    /**
+     * @var StreamFactoryInterface
+     */
+    private $streamFactory;
 
     /**
      * Holds the base URI plugin instance.
@@ -35,17 +40,18 @@ class ApiClient
     private $baseUriPlugin;
 
     public function __construct(
-        string          $baseUrl,
-        array           $plugins = [],
-        bool            $replace = true,
-        ?HttpClient     $httpClient = null,
-        ?RequestFactory $requestFactory = null
+        string                 $baseUrl,
+        array                  $plugins = [],
+        bool                   $replace = true,
+        ?HttpClient            $httpClient = null,
+        ?RequestFactoryInterface $requestFactory = null
     )
     {
-        $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
-        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
-        $this->baseUriPlugin = new BaseUriPlugin(
-            UriFactoryDiscovery::find()->createUri($baseUrl),
+        $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
+        $this->streamFactory  = Psr17FactoryDiscovery::findStreamFactory();
+        $this->httpClient     = $httpClient ?: HttpClientDiscovery::find();
+        $this->baseUriPlugin  = new BaseUriPlugin(
+            Psr17FactoryDiscovery::findUriFactory()->createUri($baseUrl),
             ['replace' => $replace]
         );
         $this->addPlugins(array_merge($plugins, [$this->baseUriPlugin]));
@@ -62,7 +68,7 @@ class ApiClient
 
     public function getHttpClient(): HttpMethodsClient
     {
-        return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory);
+        return new HttpMethodsClient($this->getPluginClient(), $this->requestFactory, $this->streamFactory);
     }
 
     public function getPluginClient(): PluginClient
@@ -117,5 +123,8 @@ class ApiClient
         }
 
         return new Collection($data ?? []);
+        // Return a plain array to avoid JSON-serializing Illuminate\Support\Collection on PHP 8.1
+        return is_array($data) ? $data : [];
+
     }
 }
