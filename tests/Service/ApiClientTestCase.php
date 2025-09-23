@@ -1,12 +1,13 @@
 <?php
+
 // tests/Service/ApiClientTest.php
 
 namespace Multicoin\Api\Tests\Service;
 
+use Http\Mock\Client as MockClient;
 use Multicoin\Api\Service\ApiClient;
 use Nyholm\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Http\Mock\Client as MockClient;
 
 class ApiClientTest extends TestCase
 {

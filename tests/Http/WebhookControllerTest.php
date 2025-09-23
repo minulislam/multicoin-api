@@ -1,4 +1,5 @@
 <?php
+
 // tests/Http/WebhookControllerTest.php
 
 namespace Multicoin\Api\Tests\Http;
@@ -9,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 use Multicoin\Api\Exceptions\WebhookFailed;
 use Multicoin\Api\Http\Controllers\WebhookController;
 use Multicoin\Api\Http\Middlewares\VerifySignature;
-use Multicoin\Api\WebhookCall;
 use Multicoin\Api\Tests\TestbenchTestCase;
+use Multicoin\Api\WebhookCall;
 
 class WebhookControllerTest extends TestbenchTestCase
 {

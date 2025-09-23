@@ -46,6 +46,7 @@ class MulticoinServiceProvider extends ServiceProvider
             }
         }
     }
+
     // ... existing code ...
     /**
      * Register client shortcut.
