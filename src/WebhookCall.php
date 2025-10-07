@@ -21,7 +21,7 @@ class WebhookCall
         return $this->payload['value'];
     }
 
-    public function btc()
+    public function amountCrypto()
     {
         return $this->payload['value'] / 100000000;
     }
@@ -39,6 +39,10 @@ class WebhookCall
     public function currency(): string
     {
         return $this->payload['currency'];
+    }
+    public function name(): string
+    {
+        return $this->payload['coin_name'];
     }
 
     public function from(): string

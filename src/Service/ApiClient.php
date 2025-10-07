@@ -103,6 +103,8 @@ class ApiClient
         try {
             // HttpMethodsClient has dynamic methods for verbs.
             $response = $this->client->{$method}($url, $data)->getBody()->getContents();
+        return $this->parseJson($response);
+
         } catch (ClientErrorException $exception) {
             throw new Exception(
                 sprintf('HTTP client error during %s %s: %s', strtoupper($method), $url, $exception->getMessage()),
@@ -111,7 +113,6 @@ class ApiClient
             );
         }
 
-        return $this->parseJson($response);
     }
 
     protected function parseJson(string $response): Collection

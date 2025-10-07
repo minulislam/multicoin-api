@@ -96,7 +96,6 @@ class Multicoin
             $decoderPlugin,
             $headerSetPlugin,
             $queryDefaultsPlugin,
-            new RetryPlugin(),
             new ErrorPlugin(),
         ];
     }
