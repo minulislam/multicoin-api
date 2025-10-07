@@ -1,4 +1,5 @@
 <?php
+
 // tests/Unit/MulticoinUnitTest.php
 
 namespace Multicoin\Api\Tests\Unit;

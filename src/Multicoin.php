@@ -7,15 +7,14 @@ use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\Plugin\QueryDefaultsPlugin;
-use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Message\Authentication\Bearer;
+use InvalidArgumentException;
 use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Address;
 use Multicoin\Api\Traits\Currency;
 use Multicoin\Api\Traits\Invoice;
 use Multicoin\Api\Traits\Transaction;
 use Multicoin\Api\Traits\User;
-use InvalidArgumentException;
 
 class Multicoin
 {
