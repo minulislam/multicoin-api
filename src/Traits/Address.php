@@ -65,7 +65,7 @@ trait Address
 
     public function transactionsFromApi($address)
     {
-        $url = $this->buildUrl('/'.$address.'/txfromapi');
+        $url = $this->buildUrl('/addr/'.$address.'/txfromapi');
         $response = $this->client->doGet($url);
 
         return $response;
@@ -73,7 +73,7 @@ trait Address
 
     public function transactionsFromDb($address)
     {
-        $url = $this->buildUrl('/'.$address.'/txfromdb');
+        $url = $this->buildUrl('/addr/'.$address.'/txfromdb');
         $response = $this->client->doGet($url);
 
         return $response;

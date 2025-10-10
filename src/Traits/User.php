@@ -28,10 +28,13 @@ trait User
         return $response;
     }
 
-    public function setWebhookUrl($endPoint)
+    public function getWebhookUrl(array $params = [])
     {
         $url = '/user/webhook';
-        $response = $this->client->doPost($url, ['url' => $endPoint]);
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
+        }
+        $response = $this->client->doGet($url);
 
         return $response;
     }

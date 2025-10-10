@@ -12,6 +12,8 @@ use Http\Message\Authentication\Bearer;
 use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Address;
 use Multicoin\Api\Traits\Currency;
+use Multicoin\Api\Traits\CryptoConvert;
+use Multicoin\Api\Traits\ExchangeRate;
 use Multicoin\Api\Traits\Invoice;
 use Multicoin\Api\Traits\Transaction;
 use Multicoin\Api\Traits\User;
@@ -20,10 +22,12 @@ use InvalidArgumentException;
 class Multicoin
 {
     use Address;
+    use Currency;
+    use CryptoConvert;
+    use ExchangeRate;
     use Invoice;
     use Transaction;
     use User;
-    use Currency;
 
     public $coin;
     protected $client;
