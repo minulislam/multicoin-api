@@ -25,7 +25,7 @@ class RequestFailedException extends ClientErrorException
      * @param  int  $code
      * @param  null|Throwable  $previous
      */
-    public function __construct($requestOrResponse, int $code = 0, Throwable $previous = null)
+    public function __construct($requestOrResponse, int $code = 0, ?Throwable $previous = null)
     {
         if ($requestOrResponse instanceof ResponseInterface) {
             parent::__construct(
