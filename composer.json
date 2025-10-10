@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.1|^8.0",
+        "php": "^8.0|^8.2",
         "guzzlehttp/promises": "^2.3",
         "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
         "nyholm/psr7": "^1.8",
@@ -40,7 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Multicoin\\Api\\": "src"
+            "Multicoin\\Api\\": "./src"
         },
          "files": [
             "src/functions.php"
@@ -48,7 +48,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Multicoin\\Api\\Tests\\": "tests"
+            "Multicoin\\Api\\Tests\\": "./tests"
         }
     },
 

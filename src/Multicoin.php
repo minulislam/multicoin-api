@@ -92,7 +92,8 @@ class Multicoin
             'Accept' => 'application/json',
         ]);
         $queryDefaultsPlugin = new QueryDefaultsPlugin([
-            'currency' => 'btc',
+            'unit' => 'atomicUnit',
+
         ]);
 
         return [

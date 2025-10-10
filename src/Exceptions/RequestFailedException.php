@@ -2,59 +2,56 @@
 
 namespace Multicoin\Api\Exceptions;
 
-use Http\Client\Common\Exception\ClientErrorException;
+use Http\Client\Exception\HttpException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-class RequestFailedException extends ClientErrorException
+/**
+ * Exception thrown when an HTTP request fails and we want to expose the direct response body.
+ */
+class RequestFailedException extends HttpException
 {
     /**
-     * @var RequestInterface
+     * Create a new RequestFailedException.
      */
-    protected $httpRequest;
-    /**
-     * @var ResponseInterface
-     */
-    protected $httpResponse;
-
-    /**
-     * HttpRequestFailedException constructor.
-     *
-     * @param  RequestInterface|ResponseInterface  $requestOrResponse
-     * @param  int  $code
-     * @param  null|Throwable  $previous
-     */
-    public function __construct($requestOrResponse, int $code = 0, Throwable $previous = null)
+    public function __construct(RequestInterface $request, ResponseInterface $response, ?Throwable $previous = null)
     {
-        if ($requestOrResponse instanceof ResponseInterface) {
-            parent::__construct(
-                'The HTTP request Response failed with the status code '.$requestOrResponse->getStatusCode(),
-                $requestOrResponse->getRequest(),
-                $requestOrResponse->getReasponse(),
-                $previous
-            );
-            $this->httpResponse = $requestOrResponse;
+        $bodyString = '';
+        try {
+            $bodyString = (string) $response->getBody();
+        } catch (\Throwable $e) {
+            $bodyString = '';
         }
 
-        if ($requestOrResponse instanceof RequestInterface) {
-            $this->httpRequest = $requestOrResponse;
+        // Limit body preview to avoid huge messages
+        $preview = trim(mb_substr($bodyString, 0, 2000));
+        if ($preview === '' && $bodyString !== '') {
+            // Fallback if mbstring not available
+            $preview = trim(substr($bodyString, 0, 2000));
         }
+
+        $message = sprintf(
+            'HTTP %d %s for %s %s. Response body: %s',
+            $response->getStatusCode(),
+            $response->getReasonPhrase(),
+            $request->getMethod(),
+            (string) $request->getUri(),
+            $preview
+        );
+
+        parent::__construct($message, $request, $response, $previous);
     }
 
     /**
-     * @return RequestInterface
+     * Get the full raw response body as a string.
      */
-    public function getHttpRequest()
+    public function getResponseBody(): string
     {
-        return $this->httpRequest;
-    }
-
-    /**
-     * @return ResponseInterface
-     */
-    public function getHttpResponse()
-    {
-        return $this->httpResponse;
+        try {
+            return (string) $this->getResponse()->getBody();
+        } catch (\Throwable $e) {
+            return '';
+        }
     }
 }

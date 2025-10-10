@@ -3,6 +3,7 @@ namespace Multicoin\Api\Service;
 
 use Exception;
 use Http\Client\Common\Exception\ClientErrorException;
+use Http\Client\Common\Exception\ServerErrorException;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\PluginClient;
@@ -10,9 +11,10 @@ use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 // ... existing code ...
 use Http\Discovery\Psr17FactoryDiscovery;
-use Illuminate\Support\Collection;
+ use Illuminate\Support\Collection;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Multicoin\Api\Exceptions\RequestFailedException;
 
 class ApiClient
 {
@@ -106,13 +108,12 @@ class ApiClient
         return $this->parseJson($response);
 
         } catch (ClientErrorException $exception) {
-            throw new Exception(
-                sprintf('HTTP client error during %s %s: %s', strtoupper($method), $url, $exception->getMessage()),
-                (int) $exception->getCode(),
-                $exception
-            );
+            // Re-throw with direct server response included
+            throw new RequestFailedException($exception->getRequest(), $exception->getResponse(), $exception);
+        } catch (ServerErrorException $exception) {
+            // Also handle 5xx errors to expose response body
+            throw new RequestFailedException($exception->getRequest(), $exception->getResponse(), $exception);
         }
-
     }
 
     protected function parseJson(string $response): Collection
@@ -120,12 +121,11 @@ class ApiClient
         $data = json_decode($response, true);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception('Invalid JSON response: ' . json_last_error_msg());
+//            throw new Exception('Invalid JSON response: ' . json_last_error_msg());
         }
 
         return new Collection($data ?? []);
-        // Return a plain array to avoid JSON-serializing Illuminate\Support\Collection on PHP 8.1
-        return is_array($data) ? $data : [];
+
 
     }
 }
