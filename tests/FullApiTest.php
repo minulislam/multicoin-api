@@ -6,7 +6,7 @@ use Multicoin\Api\Multicoin;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Full API Test Coverage
+ * Full API Test Coverage.
  *
  * This test file demonstrates all available API endpoints
  * Uncomment the tests you want to run and provide valid test data
