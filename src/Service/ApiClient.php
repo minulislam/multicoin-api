@@ -1,4 +1,5 @@
 <?php
+
 namespace Multicoin\Api\Service;
 
 use Exception;
@@ -11,10 +12,10 @@ use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 // ... existing code ...
 use Http\Discovery\Psr17FactoryDiscovery;
- use Illuminate\Support\Collection;
+use Illuminate\Support\Collection;
+use Multicoin\Api\Exceptions\RequestFailedException;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Multicoin\Api\Exceptions\RequestFailedException;
 
 class ApiClient
 {
@@ -42,17 +43,16 @@ class ApiClient
     private $baseUriPlugin;
 
     public function __construct(
-        string                 $baseUrl,
-        array                  $plugins = [],
-        bool                   $replace = true,
-        ?HttpClient            $httpClient = null,
+        string $baseUrl,
+        array $plugins = [],
+        bool $replace = true,
+        ?HttpClient $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null
-    )
-    {
+    ) {
         $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
-        $this->streamFactory  = Psr17FactoryDiscovery::findStreamFactory();
-        $this->httpClient     = $httpClient ?: HttpClientDiscovery::find();
-        $this->baseUriPlugin  = new BaseUriPlugin(
+        $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
+        $this->baseUriPlugin = new BaseUriPlugin(
             Psr17FactoryDiscovery::findUriFactory()->createUri($baseUrl),
             ['replace' => $replace]
         );
@@ -82,6 +82,7 @@ class ApiClient
     {
         return $this->executeRequest('get', $url);
     }
+
     // ... existing code ...
     public function doPost(string $url, array $data = []): Collection
     {
@@ -92,10 +93,9 @@ class ApiClient
     /**
      * Executes an HTTP request and returns parsed JSON as a Laravel Collection.
      *
-     * @param string $method get|post|put|delete...
-     * @param string $url
-     * @param array  $data
-     *
+     * @param  string  $method  get|post|put|delete...
+     * @param  string  $url
+     * @param  array  $data
      * @return Collection
      *
      * @throws Exception
@@ -105,8 +105,8 @@ class ApiClient
         try {
             // HttpMethodsClient has dynamic methods for verbs.
             $response = $this->client->{$method}($url, $data)->getBody()->getContents();
-        return $this->parseJson($response);
 
+            return $this->parseJson($response);
         } catch (ClientErrorException $exception) {
             // Re-throw with direct server response included
             throw new RequestFailedException($exception->getRequest(), $exception->getResponse(), $exception);
@@ -125,7 +125,5 @@ class ApiClient
         }
 
         return new Collection($data ?? []);
-
-
     }
 }

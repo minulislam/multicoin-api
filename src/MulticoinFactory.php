@@ -3,7 +3,6 @@
 namespace Multicoin\Api;
 
 use InvalidArgumentException;
-use Multicoin\Api\Multicoin;
 
 class MulticoinFactory
 {

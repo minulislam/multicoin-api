@@ -31,6 +31,7 @@ class WebhookController extends Controller
         if (! class_exists($jobClass)) {
             throw WebhookFailed::jobClassDoesNotExist($jobClass, $WebhookCall);
         }
+
         return dispatch(new $jobClass($WebhookCall));
     }
 

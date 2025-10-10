@@ -6,7 +6,7 @@ use Multicoin\Api\Multicoin;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Full API Test Coverage
+ * Full API Test Coverage.
  *
  * This test file demonstrates all available API endpoints
  * Uncomment the tests you want to run and provide valid test data
@@ -22,7 +22,7 @@ class FullApiTest extends TestCase
         $config = [
             'api_token' => getenv('MULTICOIN_API_TOKEN') ?: 'your-api-token',
             'url' => getenv('MULTICOIN_API_URL') ?: 'https://api.example.com',
-            'coin' => 'btc'
+            'coin' => 'btc',
         ];
 
         $this->client = new Multicoin($config);
@@ -34,6 +34,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
     public function testGetExchangeRates()
@@ -46,6 +47,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
     public function testConvertCurrency()
@@ -55,13 +57,14 @@ class FullApiTest extends TestCase
         $response = $this->client->convertCurrency([
             'from' => 'USD',
             'to' => 'EUR',
-            'amount' => 100
+            'amount' => 100,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
     public function testGetExchangeRateMatrix()
@@ -74,6 +77,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
     public function testGetExchangeProviders()
@@ -86,6 +90,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
     public function testGetCoinRate()
@@ -98,6 +103,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testConvertCrypto()
@@ -107,13 +113,14 @@ class FullApiTest extends TestCase
         $response = $this->client->convertCrypto([
             'from' => 'btc',
             'to' => 'eth',
-            'amount' => 1
+            'amount' => 1,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testGetCryptoValue()
@@ -122,13 +129,14 @@ class FullApiTest extends TestCase
 
         $response = $this->client->getCryptoValue([
             'coin' => 'btc',
-            'amount' => 1
+            'amount' => 1,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testBatchConvertCrypto()
@@ -138,14 +146,15 @@ class FullApiTest extends TestCase
         $response = $this->client->batchConvertCrypto([
             'conversions' => [
                 ['from' => 'btc', 'to' => 'eth', 'amount' => 1],
-                ['from' => 'eth', 'to' => 'usdt', 'amount' => 10]
-            ]
+                ['from' => 'eth', 'to' => 'usdt', 'amount' => 10],
+            ],
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testGetConversionFee()
@@ -158,6 +167,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testGetSupportedCryptos()
@@ -170,6 +180,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testConvertFromUsd()
@@ -187,6 +198,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testConvertToAtomic()
@@ -199,6 +211,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
     public function testConvertToBase()
@@ -211,6 +224,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group websocket
      */
     public function testBlockNotify()
@@ -219,13 +233,14 @@ class FullApiTest extends TestCase
 
         $response = $this->client->blockNotify([
             'hash' => '000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f',
-            'height' => 0
+            'height' => 0,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group websocket
      */
     public function testTransactionNotify()
@@ -233,13 +248,14 @@ class FullApiTest extends TestCase
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->transactionNotify([
-            'txid' => '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b'
+            'txid' => '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b',
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group websocket
      */
     public function testGetSocketioAddressList()
@@ -256,6 +272,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
     public function testUserInfo()
@@ -268,6 +285,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
     public function testCoreBalance()
@@ -280,6 +298,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
     public function testBalance()
@@ -292,6 +311,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
     public function testGetWebhookUrl()
@@ -304,6 +324,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group invoice
      */
     public function testCreateInvoice()
@@ -312,13 +333,14 @@ class FullApiTest extends TestCase
 
         $response = $this->client->createInvoice([
             'amount' => '0.001',
-            'callback' => 'https://example.com/webhook'
+            'callback' => 'https://example.com/webhook',
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group invoice
      */
     public function testUnpaidInvoice()
@@ -331,6 +353,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group invoice
      */
     public function testPaidInvoice()
@@ -343,6 +366,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddressNew()
@@ -355,6 +379,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddress()
@@ -368,6 +393,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddressBalance()
@@ -381,6 +407,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddressValidate()
@@ -394,6 +421,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddressTxs()
@@ -407,6 +435,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddressUtxo()
@@ -420,6 +449,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testAddressUnconfirmed()
@@ -433,6 +463,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testTransactionsFromDb()
@@ -446,6 +477,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function testTransactionsFromApi()
@@ -459,6 +491,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group transaction
      */
     public function testTransaction()
@@ -472,6 +505,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group transaction
      */
     public function testTransactionValidate()
@@ -485,6 +519,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group transaction
      */
     public function testTransactionConfirmations()
@@ -498,6 +533,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group currency
      */
     public function testActiveCurrencys()
@@ -510,6 +546,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group currency
      */
     public function testCurrency()
@@ -522,6 +559,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group currency
      */
     public function testFee()
@@ -534,6 +572,7 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group withdrawal
      */
     public function testWithdraw()
@@ -542,7 +581,7 @@ class FullApiTest extends TestCase
 
         $response = $this->client->withdraw([
             'address' => '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-            'amount' => '0.001'
+            'amount' => '0.001',
         ]);
         $this->assertNotEmpty($response);
     }
