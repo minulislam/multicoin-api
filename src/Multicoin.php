@@ -7,29 +7,29 @@ use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\Plugin\QueryDefaultsPlugin;
-use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Message\Authentication\Bearer;
+use InvalidArgumentException;
 use Multicoin\Api\Service\ApiClient;
 use Multicoin\Api\Traits\Address;
-use Multicoin\Api\Traits\Currency;
 use Multicoin\Api\Traits\CryptoConvert;
+use Multicoin\Api\Traits\Currency;
 use Multicoin\Api\Traits\ExchangeRate;
 use Multicoin\Api\Traits\Invoice;
 use Multicoin\Api\Traits\Transaction;
 use Multicoin\Api\Traits\User;
-use InvalidArgumentException;
 
 class Multicoin
 {
     use Address;
-    use Currency;
     use CryptoConvert;
+    use Currency;
     use ExchangeRate;
     use Invoice;
     use Transaction;
     use User;
 
     public $coin;
+
     protected $client;
 
     protected $config;
@@ -45,7 +45,7 @@ class Multicoin
 
     public function buildQueryParam(array $default, array $param = [])
     {
-        //$data = array_filter(array_merge($default, $param), 'strlen');
+        // $data = array_filter(array_merge($default, $param), 'strlen');
         $params = array_merge($default, $param);
 
         return http_build_query($params);
@@ -58,7 +58,7 @@ class Multicoin
 
     public function setAuth($apiKey = null)
     {
-        if (null === $apiKey) {
+        if ($apiKey === null) {
             $apiKey = config('multicoin.api_token');
         }
 
@@ -87,7 +87,7 @@ class Multicoin
     public function setPlugins($apiKey = null)
     {
         $auth = $this->setAuth($apiKey);
-        $decoderPlugin = new DecoderPlugin();
+        $decoderPlugin = new DecoderPlugin;
         $headerSetPlugin = new HeaderSetPlugin([
             'Accept' => 'application/json',
         ]);
@@ -101,13 +101,13 @@ class Multicoin
             $decoderPlugin,
             $headerSetPlugin,
             $queryDefaultsPlugin,
-            new ErrorPlugin(),
+            new ErrorPlugin,
         ];
     }
 
     public function setUrl($url = null)
     {
-        if (null === $url) {
+        if ($url === null) {
             return config('multicoin.url');
         }
 

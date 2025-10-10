@@ -31,8 +31,8 @@ trait User
     public function getWebhookUrl(array $params = [])
     {
         $url = '/user/webhook';
-        if (!empty($params)) {
-            $url .= '?' . http_build_query($params);
+        if (! empty($params)) {
+            $url .= '?'.http_build_query($params);
         }
         $response = $this->client->doGet($url);
 

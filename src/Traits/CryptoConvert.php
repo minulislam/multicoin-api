@@ -75,8 +75,8 @@ trait CryptoConvert
         if (strtoupper($method) === 'POST') {
             $response = $this->client->doPost($url, $data);
         } else {
-            if (!empty($data)) {
-                $url .= '?' . http_build_query($data);
+            if (! empty($data)) {
+                $url .= '?'.http_build_query($data);
             }
             $response = $this->client->doGet($url);
         }
@@ -91,8 +91,8 @@ trait CryptoConvert
     public function convertToAtomic(array $params = [])
     {
         $url = $this->buildUrl('/convert-to-atomic');
-        if (!empty($params)) {
-            $url .= '?' . http_build_query($params);
+        if (! empty($params)) {
+            $url .= '?'.http_build_query($params);
         }
         $response = $this->client->doGet($url);
 
@@ -106,8 +106,8 @@ trait CryptoConvert
     public function convertToBase(array $params = [])
     {
         $url = $this->buildUrl('/convert-to-base');
-        if (!empty($params)) {
-            $url .= '?' . http_build_query($params);
+        if (! empty($params)) {
+            $url .= '?'.http_build_query($params);
         }
         $response = $this->client->doGet($url);
 

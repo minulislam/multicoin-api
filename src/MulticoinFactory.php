@@ -3,7 +3,6 @@
 namespace Multicoin\Api;
 
 use InvalidArgumentException;
-use Multicoin\Api\Multicoin;
 
 class MulticoinFactory
 {
@@ -24,7 +23,6 @@ class MulticoinFactory
     /**
      * Constructs currency factory instance.
      *
-     * @param  array  $config
      * @return void
      */
     public function __construct(array $config)
@@ -35,8 +33,6 @@ class MulticoinFactory
     /**
      * Pass methods onto the default currency.
      *
-     * @param  string  $method
-     * @param  array  $parameters
      * @return mixed
      */
     public function __call(string $method, array $parameters)
@@ -46,9 +42,6 @@ class MulticoinFactory
 
     /**
      * Gets currency instance by name or creates if not exists.
-     *
-     * @param  string  $name
-     * @return \Multicoin\Api\Multicoin
      */
     public function currency(string $name = 'BTC'): Multicoin
     {
@@ -63,9 +56,6 @@ class MulticoinFactory
 
     /**
      * Gets currency config by name.
-     *
-     * @param  string  $name
-     * @return array
      */
     public function getConfig(string $name = 'BTC'): array
     {
@@ -93,9 +83,6 @@ class MulticoinFactory
 
     /**
      * Creates currency instance.
-     *
-     * @param  array  $config
-     * @return \Multicoin\Api\Multicoin
      */
     public function make(array $config = []): Multicoin
     {
@@ -104,9 +91,6 @@ class MulticoinFactory
 
     /**
      * Appends configuration array with default values.
-     *
-     * @param  array  $config
-     * @return array
      */
     protected function withDefaults(array $config, string $name): array
     {

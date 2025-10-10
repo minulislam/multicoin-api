@@ -40,6 +40,7 @@ class WebhookCall
     {
         return $this->payload['currency'];
     }
+
     public function name(): string
     {
         return $this->payload['coin_name'];

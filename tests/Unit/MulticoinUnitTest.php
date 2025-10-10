@@ -1,4 +1,5 @@
 <?php
+
 // tests/Unit/MulticoinUnitTest.php
 
 namespace Multicoin\Api\Tests\Unit;
@@ -9,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class MulticoinUnitTest extends TestCase
 {
-    public function test_setClient_requires_api_token()
+    public function test_set_client_requires_api_token()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('api_token');
@@ -21,7 +22,7 @@ class MulticoinUnitTest extends TestCase
         ]);
     }
 
-    public function test_setClient_requires_url()
+    public function test_set_client_requires_url()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('url');
@@ -33,7 +34,7 @@ class MulticoinUnitTest extends TestCase
         ]);
     }
 
-    public function test_buildUrl_uses_coin_prefix()
+    public function test_build_url_uses_coin_prefix()
     {
         $api = new Multicoin([
             'api_token' => 'token',
@@ -45,7 +46,7 @@ class MulticoinUnitTest extends TestCase
         $this->assertSame('/TBTC/addresses', $api->buildUrl('addresses'));
     }
 
-    public function test_buildQueryParam_merges_and_encodes()
+    public function test_build_query_param_merges_and_encodes()
     {
         $api = new Multicoin([
             'api_token' => 'token',

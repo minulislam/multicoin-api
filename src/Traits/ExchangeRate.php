@@ -23,8 +23,8 @@ trait ExchangeRate
     public function convertCurrency(array $params = [])
     {
         $url = '/exchange-rates/convert';
-        if (!empty($params)) {
-            $url .= '?' . http_build_query($params);
+        if (! empty($params)) {
+            $url .= '?'.http_build_query($params);
         }
         $response = $this->client->doGet($url);
 

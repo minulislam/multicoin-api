@@ -13,7 +13,7 @@ abstract class TestbenchTestCase extends Testbench
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
     }
@@ -23,7 +23,7 @@ abstract class TestbenchTestCase extends Testbench
      *
      * @return void
      */
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
     }
@@ -31,7 +31,6 @@ abstract class TestbenchTestCase extends Testbench
     /**
      * Tell Testbench to use this package.
      *
-     * @param  $app
      * @return array
      */
     protected function getPackageProviders($app)

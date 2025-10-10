@@ -22,7 +22,7 @@ class FullApiTest extends TestCase
         $config = [
             'api_token' => getenv('MULTICOIN_API_TOKEN') ?: 'your-api-token',
             'url' => getenv('MULTICOIN_API_URL') ?: 'https://api.example.com',
-            'coin' => 'btc'
+            'coin' => 'btc',
         ];
 
         $this->client = new Multicoin($config);
@@ -34,9 +34,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
-    public function testGetExchangeRates()
+    public function test_get_exchange_rates()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -46,25 +47,27 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
-    public function testConvertCurrency()
+    public function test_convert_currency()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->convertCurrency([
             'from' => 'USD',
             'to' => 'EUR',
-            'amount' => 100
+            'amount' => 100,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
-    public function testGetExchangeRateMatrix()
+    public function test_get_exchange_rate_matrix()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -74,9 +77,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
-    public function testGetExchangeProviders()
+    public function test_get_exchange_providers()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -86,9 +90,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group exchange-rates
      */
-    public function testGetCoinRate()
+    public function test_get_coin_rate()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -98,57 +103,61 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testConvertCrypto()
+    public function test_convert_crypto()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->convertCrypto([
             'from' => 'btc',
             'to' => 'eth',
-            'amount' => 1
+            'amount' => 1,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testGetCryptoValue()
+    public function test_get_crypto_value()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->getCryptoValue([
             'coin' => 'btc',
-            'amount' => 1
+            'amount' => 1,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testBatchConvertCrypto()
+    public function test_batch_convert_crypto()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->batchConvertCrypto([
             'conversions' => [
                 ['from' => 'btc', 'to' => 'eth', 'amount' => 1],
-                ['from' => 'eth', 'to' => 'usdt', 'amount' => 10]
-            ]
+                ['from' => 'eth', 'to' => 'usdt', 'amount' => 10],
+            ],
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testGetConversionFee()
+    public function test_get_conversion_fee()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -158,9 +167,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testGetSupportedCryptos()
+    public function test_get_supported_cryptos()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -170,9 +180,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testConvertFromUsd()
+    public function test_convert_from_usd()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -187,9 +198,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testConvertToAtomic()
+    public function test_convert_to_atomic()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -199,9 +211,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group crypto-convert
      */
-    public function testConvertToBase()
+    public function test_convert_to_base()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -211,38 +224,41 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group websocket
      */
-    public function testBlockNotify()
+    public function test_block_notify()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->blockNotify([
             'hash' => '000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f',
-            'height' => 0
+            'height' => 0,
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group websocket
      */
-    public function testTransactionNotify()
+    public function test_transaction_notify()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->transactionNotify([
-            'txid' => '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b'
+            'txid' => '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b',
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group websocket
      */
-    public function testGetSocketioAddressList()
+    public function test_get_socketio_address_list()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -256,9 +272,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
-    public function testUserInfo()
+    public function test_user_info()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -268,9 +285,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
-    public function testCoreBalance()
+    public function test_core_balance()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -280,9 +298,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
-    public function testBalance()
+    public function test_balance()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -292,9 +311,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group user
      */
-    public function testGetWebhookUrl()
+    public function test_get_webhook_url()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -304,24 +324,26 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group invoice
      */
-    public function testCreateInvoice()
+    public function test_create_invoice()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->createInvoice([
             'amount' => '0.001',
-            'callback' => 'https://example.com/webhook'
+            'callback' => 'https://example.com/webhook',
         ]);
         $this->assertNotEmpty($response);
     }
 
     /**
      * @test
+     *
      * @group invoice
      */
-    public function testUnpaidInvoice()
+    public function test_unpaid_invoice()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -331,9 +353,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group invoice
      */
-    public function testPaidInvoice()
+    public function test_paid_invoice()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -343,9 +366,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddressNew()
+    public function test_address_new()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -355,9 +379,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddress()
+    public function test_address()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -368,9 +393,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddressBalance()
+    public function test_address_balance()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -381,9 +407,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddressValidate()
+    public function test_address_validate()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -394,9 +421,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddressTxs()
+    public function test_address_txs()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -407,9 +435,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddressUtxo()
+    public function test_address_utxo()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -420,9 +449,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testAddressUnconfirmed()
+    public function test_address_unconfirmed()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -433,9 +463,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testTransactionsFromDb()
+    public function test_transactions_from_db()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -446,9 +477,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
-    public function testTransactionsFromApi()
+    public function test_transactions_from_api()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -459,9 +491,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group transaction
      */
-    public function testTransaction()
+    public function test_transaction()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -472,9 +505,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group transaction
      */
-    public function testTransactionValidate()
+    public function test_transaction_validate()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -485,9 +519,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group transaction
      */
-    public function testTransactionConfirmations()
+    public function test_transaction_confirmations()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -498,9 +533,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group currency
      */
-    public function testActiveCurrencys()
+    public function test_active_currencys()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -510,9 +546,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group currency
      */
-    public function testCurrency()
+    public function test_currency()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -522,9 +559,10 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group currency
      */
-    public function testFee()
+    public function test_fee()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
@@ -534,15 +572,16 @@ class FullApiTest extends TestCase
 
     /**
      * @test
+     *
      * @group withdrawal
      */
-    public function testWithdraw()
+    public function test_withdraw()
     {
         $this->markTestSkipped('Uncomment to run this test');
 
         $response = $this->client->withdraw([
             'address' => '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-            'amount' => '0.001'
+            'amount' => '0.001',
         ]);
         $this->assertNotEmpty($response);
     }

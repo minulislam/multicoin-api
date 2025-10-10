@@ -1,12 +1,13 @@
 <?php
+
 // tests/Service/ApiClientTest.php
 
 namespace Multicoin\Api\Tests\Service;
 
+use Http\Mock\Client as MockClient;
 use Multicoin\Api\Service\ApiClient;
 use Nyholm\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Http\Mock\Client as MockClient;
 
 class ApiClientTest extends TestCase
 {
@@ -16,9 +17,9 @@ class ApiClientTest extends TestCase
         return new ApiClient($baseUrl, [], true, $mock);
     }
 
-    public function test_doGet_parses_json_and_returns_collection()
+    public function test_do_get_parses_json_and_returns_collection()
     {
-        $mock = new MockClient();
+        $mock = new MockClient;
         $mock->setDefaultResponse(new Response(200, ['Content-Type' => 'application/json'], json_encode([
             'ok' => true,
             'data' => ['a' => 1],
@@ -32,9 +33,9 @@ class ApiClientTest extends TestCase
         $this->assertSame(1, $result->get('data')['a']);
     }
 
-    public function test_doPost_sends_headers_and_parses_response()
+    public function test_do_post_sends_headers_and_parses_response()
     {
-        $mock = new MockClient();
+        $mock = new MockClient;
         $mock->setDefaultResponse(new Response(200, ['Content-Type' => 'application/json'], json_encode([
             'saved' => true,
         ])));
@@ -52,12 +53,12 @@ class ApiClientTest extends TestCase
         $this->assertSame(['abc-123'], $request->getHeader('X-Trace-Id'));
     }
 
-    public function test_executeRequest_throws_on_invalid_json()
+    public function test_execute_request_throws_on_invalid_json()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid JSON response');
 
-        $mock = new MockClient();
+        $mock = new MockClient;
         $mock->setDefaultResponse(new Response(200, ['Content-Type' => 'application/json'], 'not-json'));
 
         $client = $this->makeClientWithMock($mock);

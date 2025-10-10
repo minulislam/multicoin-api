@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "http-interop/http-factory-guzzle": "^1.2",
+        "laravel/pint": "^1.25",
         "php-http/mock-client": "^1.2"
     },
 
