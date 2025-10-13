@@ -107,7 +107,6 @@ class ApiClient
             $response = $this->client->{$method}($url, $data)->getBody()->getContents();
 
             return $this->parseJson($response);
-
         } catch (ClientErrorException $exception) {
             // Re-throw with direct server response included
             throw new RequestFailedException($exception->getRequest(), $exception->getResponse(), $exception);
@@ -126,6 +125,5 @@ class ApiClient
         }
 
         return new Collection($data ?? []);
-
     }
 }

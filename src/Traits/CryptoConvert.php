@@ -6,7 +6,7 @@ trait CryptoConvert
 {
     /**
      * Convert cryptocurrency
-     * POST /api/v1/crypto-convert
+     * POST /api/v1/crypto-convert.
      */
     public function convertCrypto(array $data)
     {
@@ -18,7 +18,7 @@ trait CryptoConvert
 
     /**
      * Get cryptocurrency value
-     * POST /api/v1/crypto-convert/value
+     * POST /api/v1/crypto-convert/value.
      */
     public function getCryptoValue(array $data)
     {
@@ -30,7 +30,7 @@ trait CryptoConvert
 
     /**
      * Batch convert cryptocurrencies
-     * POST /api/v1/crypto-convert/batch
+     * POST /api/v1/crypto-convert/batch.
      */
     public function batchConvertCrypto(array $data)
     {
@@ -42,7 +42,7 @@ trait CryptoConvert
 
     /**
      * Get conversion fee
-     * GET /api/v1/crypto-convert/fee
+     * GET /api/v1/crypto-convert/fee.
      */
     public function getConversionFee()
     {
@@ -54,7 +54,7 @@ trait CryptoConvert
 
     /**
      * Get supported cryptocurrencies
-     * GET /api/v1/crypto-convert/supported
+     * GET /api/v1/crypto-convert/supported.
      */
     public function getSupportedCryptos()
     {
@@ -66,7 +66,7 @@ trait CryptoConvert
 
     /**
      * Convert from USD to cryptocurrency
-     * GET|POST /api/v1/{coin}/convert-from-usd
+     * GET|POST /api/v1/{coin}/convert-from-usd.
      */
     public function convertFromUsd(array $data = [], $method = 'GET')
     {
@@ -86,7 +86,7 @@ trait CryptoConvert
 
     /**
      * Convert to atomic units
-     * GET /api/v1/{coin}/convert-to-atomic
+     * GET /api/v1/{coin}/convert-to-atomic.
      */
     public function convertToAtomic(array $params = [])
     {
@@ -101,7 +101,7 @@ trait CryptoConvert
 
     /**
      * Convert to base units
-     * GET /api/v1/{coin}/convert-to-base
+     * GET /api/v1/{coin}/convert-to-base.
      */
     public function convertToBase(array $params = [])
     {
