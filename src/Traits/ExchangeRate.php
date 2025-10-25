@@ -6,7 +6,7 @@ trait ExchangeRate
 {
     /**
      * Get all exchange rates
-     * GET /api/v1/exchange-rates
+     * GET /api/v1/exchange-rates.
      */
     public function getExchangeRates()
     {
@@ -18,7 +18,7 @@ trait ExchangeRate
 
     /**
      * Convert between currencies
-     * GET /api/v1/exchange-rates/convert
+     * GET /api/v1/exchange-rates/convert.
      */
     public function convertCurrency(array $params = [])
     {
@@ -33,7 +33,7 @@ trait ExchangeRate
 
     /**
      * Get exchange rate matrix
-     * GET /api/v1/exchange-rates/matrix
+     * GET /api/v1/exchange-rates/matrix.
      */
     public function getExchangeRateMatrix()
     {
@@ -45,7 +45,7 @@ trait ExchangeRate
 
     /**
      * Get exchange rate providers
-     * GET /api/v1/exchange-rates/providers
+     * GET /api/v1/exchange-rates/providers.
      */
     public function getExchangeProviders()
     {
@@ -57,7 +57,7 @@ trait ExchangeRate
 
     /**
      * Get specific coin exchange rate
-     * GET /api/v1/{coin}/rate
+     * GET /api/v1/{coin}/rate.
      */
     public function getCoinRate()
     {
