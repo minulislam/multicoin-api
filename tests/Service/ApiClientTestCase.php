@@ -9,7 +9,7 @@ use Multicoin\Api\Service\ApiClient;
 use Nyholm\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
-class ApiClientTest extends TestCase
+class ApiClientTestCase extends TestCase
 {
     private function makeClientWithMock(MockClient $mock, string $baseUrl = 'https://api.example.com'): ApiClient
     {
